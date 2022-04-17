@@ -1,0 +1,37 @@
+{
+  "applications": "*",
+  "changelogDate": "20220417160357",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "map",
+  "fields": [
+    {
+      "fieldName": "distance",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "timeStart",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "timeStop",
+      "fieldType": "Instant"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Map",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "distance",
+      "otherEntityName": "stats",
+      "otherEntityRelationshipName": "map",
+      "ownerSide": true,
+      "relationshipName": "stats",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "service": "no"
+}

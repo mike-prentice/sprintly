@@ -48,6 +48,11 @@ public class CacheConfiguration {
             createCache(cm, com.sprintly.domain.User.class.getName());
             createCache(cm, com.sprintly.domain.Authority.class.getName());
             createCache(cm, com.sprintly.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.sprintly.domain.Stats.class.getName());
+            createCache(cm, com.sprintly.domain.Trends.class.getName());
+            createCache(cm, com.sprintly.domain.Ranking.class.getName());
+            createCache(cm, com.sprintly.domain.Ranking.class.getName() + ".stats");
+            createCache(cm, com.sprintly.domain.Map.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

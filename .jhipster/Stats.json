@@ -1,0 +1,49 @@
+{
+  "applications": "*",
+  "changelogDate": "20220417160354",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "stats",
+  "fields": [
+    {
+      "fieldName": "distanceRan",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "time",
+      "fieldType": "Duration"
+    },
+    {
+      "fieldName": "cadence",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["max"],
+      "fieldValidateRulesMax": "200"
+    },
+    {
+      "fieldName": "avgpace",
+      "fieldType": "Float"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Stats",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "stats",
+      "ownerSide": true,
+      "relationshipName": "user",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityName": "ranking",
+      "otherEntityRelationshipName": "stats",
+      "relationshipName": "ranking",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "no"
+}

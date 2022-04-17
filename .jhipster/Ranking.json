@@ -1,0 +1,44 @@
+{
+  "applications": "*",
+  "changelogDate": "20220417160356",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "ranking",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "avgpace",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "rank",
+      "fieldType": "Integer"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Ranking",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "ranking",
+      "ownerSide": true,
+      "relationshipName": "user",
+      "relationshipType": "one-to-one"
+    },
+    {
+      "otherEntityField": "avgpace",
+      "otherEntityName": "stats",
+      "otherEntityRelationshipName": "ranking",
+      "relationshipName": "stats",
+      "relationshipType": "one-to-many"
+    }
+  ],
+  "service": "no"
+}

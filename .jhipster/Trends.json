@@ -1,0 +1,33 @@
+{
+  "applications": "*",
+  "changelogDate": "20220417160355",
+  "dto": "no",
+  "embedded": false,
+  "entityTableName": "trends",
+  "fields": [
+    {
+      "fieldName": "avgPace",
+      "fieldType": "Float"
+    },
+    {
+      "fieldName": "distancePerRun",
+      "fieldType": "Float"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": false,
+  "name": "Trends",
+  "pagination": "no",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "trends",
+      "ownerSide": true,
+      "relationshipName": "user",
+      "relationshipType": "one-to-one"
+    }
+  ],
+  "service": "no"
+}
