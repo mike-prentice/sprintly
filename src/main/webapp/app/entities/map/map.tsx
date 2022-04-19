@@ -19,6 +19,21 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
   const mapList = useAppSelector(state => state.map.entities);
   const loading = useAppSelector(state => state.map.loading);
   const [scriptLoaded, setScriptLoaded] = useState(false);
+  const [lat, setLat] = useState(null);
+  const [lng, setLng] = useState(null);
+  const [status, setStatus] = useState(null);
+
+  const getLocation = () => {
+      setStatus('Locating...');
+  navigator.geolocation.getCurrentPosition((position) => {
+    setStatus(null);
+    setLat(position.coords.latitude);
+    setLng(position.coords.longitude);
+  }, () => {
+    setStatus('Unable to retrieve location');
+  });
+}
+
 
   useEffect(() => {
     const googleMapScript = loadMapApi();
@@ -40,7 +55,18 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
               {scriptLoaded && (
                 <Gmap mapType={google.maps.MapTypeId.ROADMAP} mapTypeControl={true}/>
               )}
-            </div>
+      </div>
+      <button onClick={getLocation}>Get Location</button>
+      <h1>Coordinates</h1>
+      <p>{status}</p>
+      {lat && <p>Latitude: {lat}</p>}
+      {lng && <p>Longitude: {lng}</p>}
+      <button 
+        style={{ backgroundColor: "blue" }}
+        className="startBtn">Start Run</button>
+       <button 
+        style={{ backgroundColor: "blue" }}
+      className="startBtn">Stop Run</button>
       <h2 id="map-heading" data-cy="MapHeading">
         Maps
         <div className="d-flex justify-content-end">
@@ -62,7 +88,7 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
                 <th>Distance</th>
                 <th>Time Start</th>
                 <th>Time Stop</th>
-                <th>Stats</th>
+                <th>Total Time</th>
                 <th />
               </tr>
             </thead>
@@ -96,7 +122,7 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
             </tbody>
           </Table>
         ) : (
-          !loading && <div className="alert alert-warning">No Maps found</div>
+          !loading && <div className="alert alert-warning">No Runs found</div>
         )}
       </div>
     </div>
