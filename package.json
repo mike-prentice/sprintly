@@ -100,6 +100,7 @@
   },
   "devDependencies": {
     "@testing-library/react": "12.1.4",
+    "@types/googlemaps": "^3.43.3",
     "@types/jest": "27.4.1",
     "@types/lodash": "4.14.181",
     "@types/node": "16.11.26",

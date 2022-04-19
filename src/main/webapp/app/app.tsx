@@ -2,7 +2,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import './app.scss';
 import 'app/config/dayjs.ts';
 
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Card } from 'reactstrap';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
@@ -16,13 +16,21 @@ import { hasAnyAuthority } from 'app/shared/auth/private-route';
 import ErrorBoundary from 'app/shared/error/error-boundary';
 import { AUTHORITIES } from 'app/config/constants';
 import AppRoutes from 'app/routes';
+import Gmap from 'app/modules/home/Gmap';
+import { loadMapApi } from 'app/modules/home/GoogleMapsUtils';
+import 'app/modules/home/Map.scss';
 
 const baseHref = document.querySelector('base').getAttribute('href').replace(/\/$/, '');
 
 export const App = () => {
   const dispatch = useAppDispatch();
+  const [scriptLoaded, setScriptLoaded] = useState(false);
 
   useEffect(() => {
+    const googleMapScript = loadMapApi();
+    googleMapScript.addEventListener('load', function () {
+      setScriptLoaded(true);
+    })
     dispatch(getSession());
     dispatch(getProfile());
   }, []);
@@ -49,6 +57,11 @@ export const App = () => {
         </ErrorBoundary>
         <div className="container-fluid view-container" id="app-view-container">
           <Card className="jh-card">
+            <div className="container-fliud view-container" id = "app-view-container">
+              {scriptLoaded && (
+                <Gmap mapType={google.maps.MapTypeId.ROADMAP} mapTypeControl={true}/>
+              )}
+            </div>
             <ErrorBoundary>
               <AppRoutes />
             </ErrorBoundary>
