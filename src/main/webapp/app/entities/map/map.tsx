@@ -9,14 +9,22 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IMap } from 'app/shared/model/map.model';
 import { getEntities } from './map.reducer';
+import Gmap from 'app/modules/home/Gmap';
+import { loadMapApi } from 'app/modules/home/GoogleMapsUtils';
+import 'app/modules/home/Map.scss';
 
 export const Map = (props: RouteComponentProps<{ url: string }>) => {
   const dispatch = useAppDispatch();
 
   const mapList = useAppSelector(state => state.map.entities);
   const loading = useAppSelector(state => state.map.loading);
+  const [scriptLoaded, setScriptLoaded] = useState(false);
 
   useEffect(() => {
+    const googleMapScript = loadMapApi();
+    googleMapScript.addEventListener('load', function () {
+      setScriptLoaded(true);
+    })
     dispatch(getEntities({}));
   }, []);
 
@@ -28,6 +36,11 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
 
   return (
     <div>
+       <div className="map-container">
+              {scriptLoaded && (
+                <Gmap mapType={google.maps.MapTypeId.ROADMAP} mapTypeControl={true}/>
+              )}
+            </div>
       <h2 id="map-heading" data-cy="MapHeading">
         Maps
         <div className="d-flex justify-content-end">
