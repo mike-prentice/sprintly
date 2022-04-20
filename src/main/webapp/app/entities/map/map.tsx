@@ -23,6 +23,9 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
   const [lng, setLng] = useState(null);
   const [timeStart, setTimeStart] = useState(null);
   const [status, setStatus] = useState(null);
+  const [endLat, setEndLat] = useState(null);
+  const [endLng, setEndLng] = useState(null);
+  const [timeEnd, setTimeEnd] = useState(null);
   let watchID;
 
   const startWatching = () => {
@@ -40,8 +43,16 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
   
   const stopWatching = () => {
     navigator.geolocation.clearWatch(watchID);
-  }
-
+    navigator.geolocation.getCurrentPosition((positionEnd) => {
+      setEndLat(positionEnd.coords.latitude);
+      setEndLng(positionEnd.coords.longitude);
+      setTimeEnd(positionEnd.timestamp);
+    }, () => {
+      setStatus('Great Run!');
+    });
+  } 
+  const runStart = new Date(timeStart * 1000);
+  
 
   useEffect(() => {
     const googleMapScript = loadMapApi();
@@ -72,9 +83,13 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
       {lat && <p>Latitude: {lat}</p>}
       {lng && <p>Longitude: {lng}</p>}
       {timeStart && <p>Time Stamp {timeStart}</p>}
+      <p>{status}</p>
+      {endLat && <p>Latitude: {endLat}</p>}
+      {endLng && <p>Longitude: {endLng}</p>}
+      {timeEnd && <p>Time Stamp {timeEnd}</p>}
+      
       
       <h2 id="map-heading" data-cy="MapHeading">
-        Maps
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} /> Refresh List
