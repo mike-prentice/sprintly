@@ -21,18 +21,26 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
   const [scriptLoaded, setScriptLoaded] = useState(false);
   const [lat, setLat] = useState(null);
   const [lng, setLng] = useState(null);
+  const [timeStart, setTimeStart] = useState(null);
   const [status, setStatus] = useState(null);
+  let watchID;
 
-  const getLocation = () => {
+  const startWatching = () => {
       setStatus('Locating...');
-  navigator.geolocation.getCurrentPosition((position) => {
+  watchID = navigator.geolocation.watchPosition((position) => {
     setStatus(null);
     setLat(position.coords.latitude);
     setLng(position.coords.longitude);
+    setTimeStart(position.timestamp);
+    
   }, () => {
     setStatus('Unable to retrieve location');
   });
-}
+  }
+  
+  const stopWatching = () => {
+    navigator.geolocation.clearWatch(watchID);
+  }
 
 
   useEffect(() => {
@@ -50,20 +58,20 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
   const { match } = props;
 
   return (
-    <div>
+    <div className="container-fluid">
        <div className="map-container">
               {scriptLoaded && (
                 <Gmap mapType={google.maps.MapTypeId.ROADMAP} mapTypeControl={true}/>
               )}
       </div>
-      <div className="container-fluid d-flex">
-        <button className="btn btn-primary justify-content-center" onClick={getLocation}>Start Run</button>
-        <button className="btn btn-primary justify-content-center" onClick={getLocation}>Stop Run</button>
+      <div className="d-flex justify-content-center">
+        <button className="btn btn-primary justify-content-center" onClick={startWatching}>Start Run</button>
+        <button className="btn btn-primary justify-content-center" onClick={stopWatching}>Stop Run</button>
         </div>
-      <h1>Coordinates</h1>
       <p>{status}</p>
       {lat && <p>Latitude: {lat}</p>}
       {lng && <p>Longitude: {lng}</p>}
+      {timeStart && <p>Time Stamp {timeStart}</p>}
       
       <h2 id="map-heading" data-cy="MapHeading">
         Maps
