@@ -43,10 +43,10 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
   
   const endPosition = () => {
     setStatus('Nice Run!');
-    navigator.geolocation.getCurrentPosition((positionEnd) => {
-      setEndLat(positionEnd.coords.latitude);
-      setEndLng(positionEnd.coords.longitude);
-      setTimeEnd(positionEnd.timestamp);
+    navigator.geolocation.getCurrentPosition((position) => {
+      setEndLat(position.coords.latitude);
+      setEndLng(position.coords.longitude);
+      setTimeEnd(position.timestamp);
     }, () => {
       setStatus('Unable to retrieve final location');
     });
@@ -54,6 +54,7 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
 
   const stopWatching = () => {
     navigator.geolocation.clearWatch(watchID);
+    endPosition();
     
   } 
   const runStart = new Date(timeStart * 1000);

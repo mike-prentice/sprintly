@@ -173,5 +173,11 @@
   "jestSonar": {
     "reportPath": "target/test-results/jest",
     "reportFile": "TESTS-results-sonar.xml"
-  }
+  },
+  "eslintConfig": {
+    "env": {
+        "browser": true,
+        "node": true
+    }
+}
 }

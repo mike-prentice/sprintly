@@ -1,6 +1,8 @@
 export const loadMapApi = () => {
-    const mapsURL = "https://maps.googleapis.com/maps/api/js?key=AIzaSyAI3S6kjwE8khIB6UiCSG27YLOe1whQD1U&libraries=places&language=no®ion=NO&v=3.48";
-    
+
+  // const MY_KEY = process.env.REACT_APP_API_KEY;
+    const mapsURL = "https://maps.googleapis.com/maps/api/js?key=&libraries=places&language=no®ion=NO&v=3.48";
+
     const scripts = document.getElementsByTagName('script');
 
     for (let i = 0; i < scripts.length; i++) {
