@@ -1,1 +1,1 @@
-export { default } from './Gmap';
+export { default } from '../googleMapModule/Gmap';

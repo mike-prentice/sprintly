@@ -9,9 +9,9 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 
 import { IMap } from 'app/shared/model/map.model';
 import { getEntities } from './map.reducer';
-import Gmap from 'app/modules/home/Gmap';
-import { loadMapApi } from 'app/modules/home/GoogleMapsUtils';
-import 'app/modules/home/Map.scss';
+import Gmap from 'app/modules/googleMapModule/Gmap';
+import { loadMapApi } from 'app/modules/googleMapModule/GoogleMapsUtils';
+import 'app/modules/googleMapModule/Map.scss';
 
 export const Map = (props: RouteComponentProps<{ url: string }>) => {
   const dispatch = useAppDispatch();
@@ -27,6 +27,7 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
   const [endLng, setEndLng] = useState(null);
   const [timeEnd, setTimeEnd] = useState(null);
   let watchID;
+
 
   const startWatching = () => {
       setStatus('Locating...');
@@ -57,7 +58,7 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
     endPosition();
     
   } 
-  const runStart = new Date(timeStart * 1000);
+  
   
 
   useEffect(() => {
