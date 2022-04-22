@@ -12,6 +12,8 @@ import { getEntities } from './map.reducer';
 import Gmap from 'app/modules/googleMapModule/Gmap';
 import { loadMapApi } from 'app/modules/googleMapModule/GoogleMapsUtils';
 import 'app/modules/googleMapModule/Map.scss';
+import { getDistance } from 'app/modules/distanceAndTimeModule/distanceModule';
+import { convertTimestamp, getDuration } from 'app/modules/distanceAndTimeModule/timeModule';
 
 export const Map = (props: RouteComponentProps<{ url: string }>) => {
   const dispatch = useAppDispatch();
@@ -26,6 +28,7 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
   const [endLat, setEndLat] = useState(null);
   const [endLng, setEndLng] = useState(null);
   const [timeEnd, setTimeEnd] = useState(null);
+  const [distance, setDistance] = useState(null);
   let watchID;
 
 
@@ -56,8 +59,9 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
   const stopWatching = () => {
     navigator.geolocation.clearWatch(watchID);
     endPosition();
-    
+    setDistance(getDistance(lat, lng, endLat, endLng));
   } 
+  
   
   
 
@@ -90,10 +94,11 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
       {lat && <p>Latitude: {lat}</p>}
       {lng && <p>Longitude: {lng}</p>}
       {timeStart && <p>Time Stamp {timeStart}</p>}
+      { <p>{distance}</p>}
       
-      {endLat && <p>Latitude: {endLat}</p>}
+      {/* {endLat && <p>Latitude: {endLat}</p>}
       {endLng && <p>Longitude: {endLng}</p>}
-      {timeEnd && <p>Time Stamp {timeEnd}</p>}
+      {timeEnd && <p>Time Stamp {timeEnd}</p>} */}
       
       
       <h2 id="map-heading" data-cy="MapHeading">
