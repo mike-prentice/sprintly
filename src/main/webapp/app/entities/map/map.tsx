@@ -96,9 +96,9 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
       {timeStart && <p>Time Stamp {timeStart}</p>}
       { <p>{distance}</p>}
       
-      {/* {endLat && <p>Latitude: {endLat}</p>}
-      {endLng && <p>Longitude: {endLng}</p>}
-      {timeEnd && <p>Time Stamp {timeEnd}</p>} */}
+      {endLat && <p>End Latitude: {endLat}</p>}
+      {endLng && <p>End Longitude: {endLng}</p>}
+      {timeEnd && <p> End Time Stamp {timeEnd}</p>}
       
       
       <h2 id="map-heading" data-cy="MapHeading">
