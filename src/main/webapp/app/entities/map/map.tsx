@@ -58,7 +58,7 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
       const stopWatching = () => {
         navigator.geolocation.clearWatch(watchID);
         endPosition();
-        setDistance(getDistance(lat, lng, endLat, endLng));
+        setDistance(google.maps.DistanceMatrixService);
       }
 
    useEffect(() => {
