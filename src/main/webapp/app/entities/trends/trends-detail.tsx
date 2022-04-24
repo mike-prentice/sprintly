@@ -31,9 +31,9 @@ export const TrendsDetail = (props: RouteComponentProps<{ id: string }>) => {
           </dt>
           <dd>{trendsEntity.avgPace}</dd>
           <dt>
-            <span id="distancePerRun">Distance Per Run</span>
+            <span id="avgdistance">Avgdistance</span>
           </dt>
-          <dd>{trendsEntity.distancePerRun}</dd>
+          <dd>{trendsEntity.avgdistance}</dd>
           <dt>User</dt>
           <dd>{trendsEntity.user ? trendsEntity.user.login : ''}</dd>
         </dl>

@@ -14,9 +14,6 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="name" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
             <column name="avgpace" type="${floatType}">
                 <constraints nullable="true" />
             </column>
@@ -47,7 +44,6 @@
                   tableName="ranking"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
-            <column name="name" type="string"/>
             <column name="avgpace" type="numeric"/>
             <column name="jhi_rank" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->

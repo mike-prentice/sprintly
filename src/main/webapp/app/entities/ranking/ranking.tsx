@@ -46,7 +46,6 @@ export const Ranking = (props: RouteComponentProps<{ url: string }>) => {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Name</th>
                 <th>Avgpace</th>
                 <th>Rank</th>
                 <th>User</th>
@@ -61,7 +60,6 @@ export const Ranking = (props: RouteComponentProps<{ url: string }>) => {
                       {ranking.id}
                     </Button>
                   </td>
-                  <td>{ranking.name}</td>
                   <td>{ranking.avgpace}</td>
                   <td>{ranking.rank}</td>
                   <td>{ranking.user ? ranking.user.login : ''}</td>

@@ -8,8 +8,6 @@ import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateT
 import { mapIdList } from 'app/shared/util/entity-utils';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 
-import { IStats } from 'app/shared/model/stats.model';
-import { getEntities as getStats } from 'app/entities/stats/stats.reducer';
 import { IMap } from 'app/shared/model/map.model';
 import { getEntity, updateEntity, createEntity, reset } from './map.reducer';
 
@@ -18,7 +16,6 @@ export const MapUpdate = (props: RouteComponentProps<{ id: string }>) => {
 
   const [isNew] = useState(!props.match.params || !props.match.params.id);
 
-  const stats = useAppSelector(state => state.stats.entities);
   const mapEntity = useAppSelector(state => state.map.entity);
   const loading = useAppSelector(state => state.map.loading);
   const updating = useAppSelector(state => state.map.updating);
@@ -33,8 +30,6 @@ export const MapUpdate = (props: RouteComponentProps<{ id: string }>) => {
     } else {
       dispatch(getEntity(props.match.params.id));
     }
-
-    dispatch(getStats({}));
   }, []);
 
   useEffect(() => {
@@ -44,13 +39,9 @@ export const MapUpdate = (props: RouteComponentProps<{ id: string }>) => {
   }, [updateSuccess]);
 
   const saveEntity = values => {
-    values.timeStart = convertDateTimeToServer(values.timeStart);
-    values.timeStop = convertDateTimeToServer(values.timeStop);
-
     const entity = {
       ...mapEntity,
       ...values,
-      stats: stats.find(it => it.id.toString() === values.stats.toString()),
     };
 
     if (isNew) {
@@ -62,15 +53,9 @@ export const MapUpdate = (props: RouteComponentProps<{ id: string }>) => {
 
   const defaultValues = () =>
     isNew
-      ? {
-          timeStart: displayDefaultDateTime(),
-          timeStop: displayDefaultDateTime(),
-        }
+      ? {}
       : {
           ...mapEntity,
-          timeStart: convertDateTimeFromServer(mapEntity.timeStart),
-          timeStop: convertDateTimeFromServer(mapEntity.timeStop),
-          stats: mapEntity?.stats?.id,
         };
 
   return (
@@ -89,33 +74,6 @@ export const MapUpdate = (props: RouteComponentProps<{ id: string }>) => {
           ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
               {!isNew ? <ValidatedField name="id" required readOnly id="map-id" label="ID" validate={{ required: true }} /> : null}
-              <ValidatedField label="Distance" id="map-distance" name="distance" data-cy="distance" type="text" />
-              <ValidatedField
-                label="Time Start"
-                id="map-timeStart"
-                name="timeStart"
-                data-cy="timeStart"
-                type="datetime-local"
-                placeholder="YYYY-MM-DD HH:mm"
-              />
-              <ValidatedField
-                label="Time Stop"
-                id="map-timeStop"
-                name="timeStop"
-                data-cy="timeStop"
-                type="datetime-local"
-                placeholder="YYYY-MM-DD HH:mm"
-              />
-              <ValidatedField id="map-stats" name="stats" data-cy="stats" label="Stats" type="select">
-                <option value="" key="0" />
-                {stats
-                  ? stats.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.distance}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/map" replace color="info">
                 <FontAwesomeIcon icon="arrow-left" />
                 &nbsp;

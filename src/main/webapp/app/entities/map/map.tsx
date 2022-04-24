@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { Translate, TextFormat } from 'react-jhipster';
+import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
@@ -21,87 +21,82 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
   const mapList = useAppSelector(state => state.map.entities);
   const loading = useAppSelector(state => state.map.loading);
   const [scriptLoaded, setScriptLoaded] = useState(false);
-  const [lat, setLat] = useState(null);
-  const [lng, setLng] = useState(null);
-  const [timeStart, setTimeStart] = useState(null);
-  const [status, setStatus] = useState(null);
-  const [endLat, setEndLat] = useState(null);
-  const [endLng, setEndLng] = useState(null);
-  const [timeEnd, setTimeEnd] = useState(null);
-  const [distance, setDistance] = useState(null);
-  let watchID;
+    const [lat, setLat] = useState(null);
+    const [lng, setLng] = useState(null);
+    const [timeStart, setTimeStart] = useState(null);
+    const [status, setStatus] = useState(null);
+    const [endLat, setEndLat] = useState(null);
+    const [endLng, setEndLng] = useState(null);
+    const [timeEnd, setTimeEnd] = useState(null);
+    const [distance, setDistance] = useState(null);
+    let watchID;
 
+    const startWatching = () => {
+          setStatus('Locating...');
+      watchID = navigator.geolocation.watchPosition((position) => {
+        setStatus(null);
+        setLat(position.coords.latitude);
+        setLng(position.coords.longitude);
+        setTimeStart(position.timestamp);
 
-  const startWatching = () => {
-      setStatus('Locating...');
-  watchID = navigator.geolocation.watchPosition((position) => {
-    setStatus(null);
-    setLat(position.coords.latitude);
-    setLng(position.coords.longitude);
-    setTimeStart(position.timestamp);
-    
-  }, () => {
-    setStatus('Unable to retrieve location');
-  });
-  }
-  
-  const endPosition = () => {
-    setStatus('Nice Run!');
-    navigator.geolocation.getCurrentPosition((position) => {
-      setEndLat(position.coords.latitude);
-      setEndLng(position.coords.longitude);
-      setTimeEnd(position.timestamp);
-    }, () => {
-      setStatus('Unable to retrieve final location');
-    });
-  }
+      }, () => {
+        setStatus('Unable to retrieve location');
+      });
+      }
 
-  const stopWatching = () => {
-    navigator.geolocation.clearWatch(watchID);
-    endPosition();
-    setDistance(getDistance(lat, lng, endLat, endLng));
-  } 
-  
-  
-  
+      const endPosition = () => {
+        setStatus('Nice Run!');
+        navigator.geolocation.getCurrentPosition((position) => {
+          setEndLat(position.coords.latitude);
+          setEndLng(position.coords.longitude);
+          setTimeEnd(position.timestamp);
+        }, () => {
+          setStatus('Unable to retrieve final location');
+        });
+      }
 
-  useEffect(() => {
-    const googleMapScript = loadMapApi();
-    googleMapScript.addEventListener('load', function () {
-      setScriptLoaded(true);
-    })
-    dispatch(getEntities({}));
-  }, []);
+      const stopWatching = () => {
+        navigator.geolocation.clearWatch(watchID);
+        endPosition();
+        setDistance(getDistance(lat, lng, endLat, endLng));
+      }
 
-  const handleSyncList = () => {
-    dispatch(getEntities({}));
-  };
+   useEffect(() => {
+     const googleMapScript = loadMapApi();
+     googleMapScript.addEventListener('load', function () {
+       setScriptLoaded(true);
+     })
+     dispatch(getEntities({}));
+   }, []);
+
+   const handleSyncList = () => {
+     dispatch(getEntities({}));
+   };
 
   const { match } = props;
 
   return (
     <div className="container-fluid">
-       <div className="map-container">
-              {scriptLoaded && (
-                <Gmap mapType={google.maps.MapTypeId.ROADMAP} mapTypeControl={true}/>
-              )}
-      </div>
-      <div className="d-flex justify-content-center">
-        <button className="btn btn-primary justify-content-center" onClick={startWatching}>Start Run</button>
-        <button className="btn btn-primary justify-content-center" onClick={stopWatching}>Stop Run</button>
-        </div>
-      <p>{status}</p>
-      {lat && <p>Latitude: {lat}</p>}
-      {lng && <p>Longitude: {lng}</p>}
-      {timeStart && <p>Time Stamp {timeStart}</p>}
-      { <p>{distance}</p>}
-      
-      {endLat && <p>End Latitude: {endLat}</p>}
-      {endLng && <p>End Longitude: {endLng}</p>}
-      {timeEnd && <p> End Time Stamp {timeEnd}</p>}
-      
-      
-      <h2 id="map-heading" data-cy="MapHeading">
+           <div className="map-container">
+                  {scriptLoaded && (
+                    <Gmap mapType={google.maps.MapTypeId.ROADMAP} mapTypeControl={true}/>
+                  )}
+          </div>
+          <div className="d-flex justify-content-center">
+            <button className="btn btn-primary justify-content-center" onClick={startWatching}>Start Run</button>
+            <button className="btn btn-primary justify-content-center" onClick={stopWatching}>Stop Run</button>
+            </div>
+          <p>{status}</p>
+          {lat && <p>Latitude: {lat}</p>}
+          {lng && <p>Longitude: {lng}</p>}
+          {timeStart && <p>Time Stamp {timeStart}</p>}
+          { <p>{distance}</p>}
+
+          {endLat && <p>End Latitude: {endLat}</p>}
+          {endLng && <p>End Longitude: {endLng}</p>}
+          {timeEnd && <p> End Time Stamp {timeEnd}</p>}
+     <h2 id="map-heading" data-cy="MapHeading">
+        Maps
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
             <FontAwesomeIcon icon="sync" spin={loading} /> Refresh List
@@ -118,10 +113,6 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Distance</th>
-                <th>Time Start</th>
-                <th>Time Stop</th>
-                <th>Total Time</th>
                 <th />
               </tr>
             </thead>
@@ -133,10 +124,6 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
                       {map.id}
                     </Button>
                   </td>
-                  <td>{map.distance}</td>
-                  <td>{map.timeStart ? <TextFormat type="date" value={map.timeStart} format={APP_DATE_FORMAT} /> : null}</td>
-                  <td>{map.timeStop ? <TextFormat type="date" value={map.timeStop} format={APP_DATE_FORMAT} /> : null}</td>
-                  <td>{map.stats ? <Link to={`/stats/${map.stats.id}`}>{map.stats.distance}</Link> : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`/map/${map.id}`} color="info" size="sm" data-cy="entityDetailsButton">
@@ -155,7 +142,7 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
             </tbody>
           </Table>
         ) : (
-          !loading && <div className="alert alert-warning">No Runs found</div>
+          !loading && <div className="alert alert-warning">No Maps found</div>
         )}
       </div>
     </div>

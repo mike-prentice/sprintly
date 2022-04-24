@@ -87,19 +87,8 @@ export const StatsUpdate = (props: RouteComponentProps<{ id: string }>) => {
           ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
               {!isNew ? <ValidatedField name="id" required readOnly id="stats-id" label="ID" validate={{ required: true }} /> : null}
-              <ValidatedField label="Distance Ran" id="stats-distanceRan" name="distanceRan" data-cy="distanceRan" type="text" />
+              <ValidatedField label="Distance" id="stats-distance" name="distance" data-cy="distance" type="text" />
               <ValidatedField label="Time" id="stats-time" name="time" data-cy="time" type="text" />
-              <ValidatedField
-                label="Cadence"
-                id="stats-cadence"
-                name="cadence"
-                data-cy="cadence"
-                type="text"
-                validate={{
-                  max: { value: 200, message: 'This field cannot be more than 200.' },
-                  validate: v => isNumber(v) || 'This field should be a number.',
-                }}
-              />
               <ValidatedField label="Avgpace" id="stats-avgpace" name="avgpace" data-cy="avgpace" type="text" />
               <ValidatedField id="stats-user" name="user" data-cy="user" label="User" type="select">
                 <option value="" key="0" />

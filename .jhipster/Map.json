@@ -4,34 +4,12 @@
   "dto": "no",
   "embedded": false,
   "entityTableName": "map",
-  "fields": [
-    {
-      "fieldName": "distance",
-      "fieldType": "Float"
-    },
-    {
-      "fieldName": "timeStart",
-      "fieldType": "Instant"
-    },
-    {
-      "fieldName": "timeStop",
-      "fieldType": "Instant"
-    }
-  ],
+  "fields": [],
   "fluentMethods": true,
   "jpaMetamodelFiltering": false,
   "name": "Map",
   "pagination": "no",
   "readOnly": false,
-  "relationships": [
-    {
-      "otherEntityField": "distance",
-      "otherEntityName": "stats",
-      "otherEntityRelationshipName": "map",
-      "ownerSide": true,
-      "relationshipName": "stats",
-      "relationshipType": "one-to-one"
-    }
-  ],
+  "relationships": [],
   "service": "no"
 }

@@ -14,22 +14,8 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="distance" type="${floatType}">
-                <constraints nullable="true" />
-            </column>
-            <column name="time_start" type="${datetimeType}">
-                <constraints nullable="true" />
-            </column>
-            <column name="time_stop" type="${datetimeType}">
-                <constraints nullable="true" />
-            </column>
-            <column name="stats_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_map__stats_id" />
-            </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
-        <dropDefaultValue tableName="map" columnName="time_start" columnDataType="${datetimeType}"/>
-        <dropDefaultValue tableName="map" columnName="time_stop" columnDataType="${datetimeType}"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
@@ -49,9 +35,6 @@
                   tableName="map"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
-            <column name="distance" type="numeric"/>
-            <column name="time_start" type="date"/>
-            <column name="time_stop" type="date"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

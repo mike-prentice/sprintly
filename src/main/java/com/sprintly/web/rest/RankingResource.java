@@ -121,9 +121,6 @@ public class RankingResource {
         Optional<Ranking> result = rankingRepository
             .findById(ranking.getId())
             .map(existingRanking -> {
-                if (ranking.getName() != null) {
-                    existingRanking.setName(ranking.getName());
-                }
                 if (ranking.getAvgpace() != null) {
                     existingRanking.setAvgpace(ranking.getAvgpace());
                 }

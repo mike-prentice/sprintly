@@ -124,8 +124,8 @@ public class TrendsResource {
                 if (trends.getAvgPace() != null) {
                     existingTrends.setAvgPace(trends.getAvgPace());
                 }
-                if (trends.getDistancePerRun() != null) {
-                    existingTrends.setDistancePerRun(trends.getDistancePerRun());
+                if (trends.getAvgdistance() != null) {
+                    existingTrends.setAvgdistance(trends.getAvgdistance());
                 }
 
                 return existingTrends;

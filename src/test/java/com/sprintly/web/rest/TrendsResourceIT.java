@@ -40,8 +40,8 @@ class TrendsResourceIT {
     private static final Float DEFAULT_AVG_PACE = 1F;
     private static final Float UPDATED_AVG_PACE = 2F;
 
-    private static final Float DEFAULT_DISTANCE_PER_RUN = 1F;
-    private static final Float UPDATED_DISTANCE_PER_RUN = 2F;
+    private static final Float DEFAULT_AVGDISTANCE = 1F;
+    private static final Float UPDATED_AVGDISTANCE = 2F;
 
     private static final String ENTITY_API_URL = "/api/trends";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -70,7 +70,7 @@ class TrendsResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Trends createEntity(EntityManager em) {
-        Trends trends = new Trends().avgPace(DEFAULT_AVG_PACE).distancePerRun(DEFAULT_DISTANCE_PER_RUN);
+        Trends trends = new Trends().avgPace(DEFAULT_AVG_PACE).avgdistance(DEFAULT_AVGDISTANCE);
         return trends;
     }
 
@@ -81,7 +81,7 @@ class TrendsResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Trends createUpdatedEntity(EntityManager em) {
-        Trends trends = new Trends().avgPace(UPDATED_AVG_PACE).distancePerRun(UPDATED_DISTANCE_PER_RUN);
+        Trends trends = new Trends().avgPace(UPDATED_AVG_PACE).avgdistance(UPDATED_AVGDISTANCE);
         return trends;
     }
 
@@ -104,7 +104,7 @@ class TrendsResourceIT {
         assertThat(trendsList).hasSize(databaseSizeBeforeCreate + 1);
         Trends testTrends = trendsList.get(trendsList.size() - 1);
         assertThat(testTrends.getAvgPace()).isEqualTo(DEFAULT_AVG_PACE);
-        assertThat(testTrends.getDistancePerRun()).isEqualTo(DEFAULT_DISTANCE_PER_RUN);
+        assertThat(testTrends.getAvgdistance()).isEqualTo(DEFAULT_AVGDISTANCE);
     }
 
     @Test
@@ -138,7 +138,7 @@ class TrendsResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(trends.getId().intValue())))
             .andExpect(jsonPath("$.[*].avgPace").value(hasItem(DEFAULT_AVG_PACE.doubleValue())))
-            .andExpect(jsonPath("$.[*].distancePerRun").value(hasItem(DEFAULT_DISTANCE_PER_RUN.doubleValue())));
+            .andExpect(jsonPath("$.[*].avgdistance").value(hasItem(DEFAULT_AVGDISTANCE.doubleValue())));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -172,7 +172,7 @@ class TrendsResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(trends.getId().intValue()))
             .andExpect(jsonPath("$.avgPace").value(DEFAULT_AVG_PACE.doubleValue()))
-            .andExpect(jsonPath("$.distancePerRun").value(DEFAULT_DISTANCE_PER_RUN.doubleValue()));
+            .andExpect(jsonPath("$.avgdistance").value(DEFAULT_AVGDISTANCE.doubleValue()));
     }
 
     @Test
@@ -194,7 +194,7 @@ class TrendsResourceIT {
         Trends updatedTrends = trendsRepository.findById(trends.getId()).get();
         // Disconnect from session so that the updates on updatedTrends are not directly saved in db
         em.detach(updatedTrends);
-        updatedTrends.avgPace(UPDATED_AVG_PACE).distancePerRun(UPDATED_DISTANCE_PER_RUN);
+        updatedTrends.avgPace(UPDATED_AVG_PACE).avgdistance(UPDATED_AVGDISTANCE);
 
         restTrendsMockMvc
             .perform(
@@ -209,7 +209,7 @@ class TrendsResourceIT {
         assertThat(trendsList).hasSize(databaseSizeBeforeUpdate);
         Trends testTrends = trendsList.get(trendsList.size() - 1);
         assertThat(testTrends.getAvgPace()).isEqualTo(UPDATED_AVG_PACE);
-        assertThat(testTrends.getDistancePerRun()).isEqualTo(UPDATED_DISTANCE_PER_RUN);
+        assertThat(testTrends.getAvgdistance()).isEqualTo(UPDATED_AVGDISTANCE);
     }
 
     @Test
@@ -293,7 +293,7 @@ class TrendsResourceIT {
         assertThat(trendsList).hasSize(databaseSizeBeforeUpdate);
         Trends testTrends = trendsList.get(trendsList.size() - 1);
         assertThat(testTrends.getAvgPace()).isEqualTo(DEFAULT_AVG_PACE);
-        assertThat(testTrends.getDistancePerRun()).isEqualTo(DEFAULT_DISTANCE_PER_RUN);
+        assertThat(testTrends.getAvgdistance()).isEqualTo(DEFAULT_AVGDISTANCE);
     }
 
     @Test
@@ -308,7 +308,7 @@ class TrendsResourceIT {
         Trends partialUpdatedTrends = new Trends();
         partialUpdatedTrends.setId(trends.getId());
 
-        partialUpdatedTrends.avgPace(UPDATED_AVG_PACE).distancePerRun(UPDATED_DISTANCE_PER_RUN);
+        partialUpdatedTrends.avgPace(UPDATED_AVG_PACE).avgdistance(UPDATED_AVGDISTANCE);
 
         restTrendsMockMvc
             .perform(
@@ -323,7 +323,7 @@ class TrendsResourceIT {
         assertThat(trendsList).hasSize(databaseSizeBeforeUpdate);
         Trends testTrends = trendsList.get(trendsList.size() - 1);
         assertThat(testTrends.getAvgPace()).isEqualTo(UPDATED_AVG_PACE);
-        assertThat(testTrends.getDistancePerRun()).isEqualTo(UPDATED_DISTANCE_PER_RUN);
+        assertThat(testTrends.getAvgdistance()).isEqualTo(UPDATED_AVGDISTANCE);
     }
 
     @Test

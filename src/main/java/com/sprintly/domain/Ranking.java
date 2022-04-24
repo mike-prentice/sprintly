@@ -23,9 +23,6 @@ public class Ranking implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "name")
-    private String name;
-
     @Column(name = "avgpace")
     private Float avgpace;
 
@@ -54,19 +51,6 @@ public class Ranking implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
-    }
-
-    public String getName() {
-        return this.name;
-    }
-
-    public Ranking name(String name) {
-        this.setName(name);
-        return this;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public Float getAvgpace() {
@@ -163,7 +147,6 @@ public class Ranking implements Serializable {
     public String toString() {
         return "Ranking{" +
             "id=" + getId() +
-            ", name='" + getName() + "'" +
             ", avgpace=" + getAvgpace() +
             ", rank=" + getRank() +
             "}";

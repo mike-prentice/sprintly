@@ -28,9 +28,9 @@ export const StatsDetail = (props: RouteComponentProps<{ id: string }>) => {
           </dt>
           <dd>{statsEntity.id}</dd>
           <dt>
-            <span id="distanceRan">Distance Ran</span>
+            <span id="distance">Distance</span>
           </dt>
-          <dd>{statsEntity.distanceRan}</dd>
+          <dd>{statsEntity.distance}</dd>
           <dt>
             <span id="time">Time</span>
           </dt>
@@ -38,13 +38,11 @@ export const StatsDetail = (props: RouteComponentProps<{ id: string }>) => {
             {statsEntity.time ? <DurationFormat value={statsEntity.time} /> : null} ({statsEntity.time})
           </dd>
           <dt>
-            <span id="cadence">Cadence</span>
-          </dt>
-          <dd>{statsEntity.cadence}</dd>
-          <dt>
             <span id="avgpace">Avgpace</span>
           </dt>
-          <dd>{statsEntity.avgpace}</dd>
+          <dd>
+            {statsEntity.avgpace ? <DurationFormat value={statsEntity.avgpace} /> : null} ({statsEntity.avgpace})
+          </dd>
           <dt>User</dt>
           <dd>{statsEntity.user ? statsEntity.user.login : ''}</dd>
           <dt>Ranking</dt>

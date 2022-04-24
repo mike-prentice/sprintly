@@ -17,7 +17,7 @@
             <column name="avg_pace" type="${floatType}">
                 <constraints nullable="true" />
             </column>
-            <column name="distance_per_run" type="${floatType}">
+            <column name="avgdistance" type="${floatType}">
                 <constraints nullable="true" />
             </column>
             <column name="user_id" type="bigint">
@@ -45,7 +45,7 @@
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
             <column name="avg_pace" type="numeric"/>
-            <column name="distance_per_run" type="numeric"/>
+            <column name="avgdistance" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

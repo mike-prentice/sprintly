@@ -37,9 +37,6 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class RankingResourceIT {
 
-    private static final String DEFAULT_NAME = "AAAAAAAAAA";
-    private static final String UPDATED_NAME = "BBBBBBBBBB";
-
     private static final Float DEFAULT_AVGPACE = 1F;
     private static final Float UPDATED_AVGPACE = 2F;
 
@@ -73,7 +70,7 @@ class RankingResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Ranking createEntity(EntityManager em) {
-        Ranking ranking = new Ranking().name(DEFAULT_NAME).avgpace(DEFAULT_AVGPACE).rank(DEFAULT_RANK);
+        Ranking ranking = new Ranking().avgpace(DEFAULT_AVGPACE).rank(DEFAULT_RANK);
         return ranking;
     }
 
@@ -84,7 +81,7 @@ class RankingResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Ranking createUpdatedEntity(EntityManager em) {
-        Ranking ranking = new Ranking().name(UPDATED_NAME).avgpace(UPDATED_AVGPACE).rank(UPDATED_RANK);
+        Ranking ranking = new Ranking().avgpace(UPDATED_AVGPACE).rank(UPDATED_RANK);
         return ranking;
     }
 
@@ -106,7 +103,6 @@ class RankingResourceIT {
         List<Ranking> rankingList = rankingRepository.findAll();
         assertThat(rankingList).hasSize(databaseSizeBeforeCreate + 1);
         Ranking testRanking = rankingList.get(rankingList.size() - 1);
-        assertThat(testRanking.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testRanking.getAvgpace()).isEqualTo(DEFAULT_AVGPACE);
         assertThat(testRanking.getRank()).isEqualTo(DEFAULT_RANK);
     }
@@ -141,7 +137,6 @@ class RankingResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(ranking.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].avgpace").value(hasItem(DEFAULT_AVGPACE.doubleValue())))
             .andExpect(jsonPath("$.[*].rank").value(hasItem(DEFAULT_RANK)));
     }
@@ -176,7 +171,6 @@ class RankingResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(ranking.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.avgpace").value(DEFAULT_AVGPACE.doubleValue()))
             .andExpect(jsonPath("$.rank").value(DEFAULT_RANK));
     }
@@ -200,7 +194,7 @@ class RankingResourceIT {
         Ranking updatedRanking = rankingRepository.findById(ranking.getId()).get();
         // Disconnect from session so that the updates on updatedRanking are not directly saved in db
         em.detach(updatedRanking);
-        updatedRanking.name(UPDATED_NAME).avgpace(UPDATED_AVGPACE).rank(UPDATED_RANK);
+        updatedRanking.avgpace(UPDATED_AVGPACE).rank(UPDATED_RANK);
 
         restRankingMockMvc
             .perform(
@@ -214,7 +208,6 @@ class RankingResourceIT {
         List<Ranking> rankingList = rankingRepository.findAll();
         assertThat(rankingList).hasSize(databaseSizeBeforeUpdate);
         Ranking testRanking = rankingList.get(rankingList.size() - 1);
-        assertThat(testRanking.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testRanking.getAvgpace()).isEqualTo(UPDATED_AVGPACE);
         assertThat(testRanking.getRank()).isEqualTo(UPDATED_RANK);
     }
@@ -287,7 +280,7 @@ class RankingResourceIT {
         Ranking partialUpdatedRanking = new Ranking();
         partialUpdatedRanking.setId(ranking.getId());
 
-        partialUpdatedRanking.avgpace(UPDATED_AVGPACE);
+        partialUpdatedRanking.rank(UPDATED_RANK);
 
         restRankingMockMvc
             .perform(
@@ -301,9 +294,8 @@ class RankingResourceIT {
         List<Ranking> rankingList = rankingRepository.findAll();
         assertThat(rankingList).hasSize(databaseSizeBeforeUpdate);
         Ranking testRanking = rankingList.get(rankingList.size() - 1);
-        assertThat(testRanking.getName()).isEqualTo(DEFAULT_NAME);
-        assertThat(testRanking.getAvgpace()).isEqualTo(UPDATED_AVGPACE);
-        assertThat(testRanking.getRank()).isEqualTo(DEFAULT_RANK);
+        assertThat(testRanking.getAvgpace()).isEqualTo(DEFAULT_AVGPACE);
+        assertThat(testRanking.getRank()).isEqualTo(UPDATED_RANK);
     }
 
     @Test
@@ -318,7 +310,7 @@ class RankingResourceIT {
         Ranking partialUpdatedRanking = new Ranking();
         partialUpdatedRanking.setId(ranking.getId());
 
-        partialUpdatedRanking.name(UPDATED_NAME).avgpace(UPDATED_AVGPACE).rank(UPDATED_RANK);
+        partialUpdatedRanking.avgpace(UPDATED_AVGPACE).rank(UPDATED_RANK);
 
         restRankingMockMvc
             .perform(
@@ -332,7 +324,6 @@ class RankingResourceIT {
         List<Ranking> rankingList = rankingRepository.findAll();
         assertThat(rankingList).hasSize(databaseSizeBeforeUpdate);
         Ranking testRanking = rankingList.get(rankingList.size() - 1);
-        assertThat(testRanking.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testRanking.getAvgpace()).isEqualTo(UPDATED_AVGPACE);
         assertThat(testRanking.getRank()).isEqualTo(UPDATED_RANK);
     }

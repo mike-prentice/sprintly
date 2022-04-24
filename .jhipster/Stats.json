@@ -6,7 +6,7 @@
   "entityTableName": "stats",
   "fields": [
     {
-      "fieldName": "distanceRan",
+      "fieldName": "distance",
       "fieldType": "Float"
     },
     {
@@ -14,14 +14,8 @@
       "fieldType": "Duration"
     },
     {
-      "fieldName": "cadence",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["max"],
-      "fieldValidateRulesMax": "200"
-    },
-    {
       "fieldName": "avgpace",
-      "fieldType": "Float"
+      "fieldType": "Duration"
     }
   ],
   "fluentMethods": true,

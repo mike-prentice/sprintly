@@ -2,29 +2,20 @@ package com.sprintly.web.rest;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
-import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.sprintly.IntegrationTest;
 import com.sprintly.domain.Map;
 import com.sprintly.repository.MapRepository;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import javax.persistence.EntityManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.ExtendWith;
-import org.mockito.Mock;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.http.MediaType;
 import org.springframework.security.test.context.support.WithMockUser;
 import org.springframework.test.web.servlet.MockMvc;
@@ -34,19 +25,9 @@ import org.springframework.transaction.annotation.Transactional;
  * Integration tests for the {@link MapResource} REST controller.
  */
 @IntegrationTest
-@ExtendWith(MockitoExtension.class)
 @AutoConfigureMockMvc
 @WithMockUser
 class MapResourceIT {
-
-    private static final Float DEFAULT_DISTANCE = 1F;
-    private static final Float UPDATED_DISTANCE = 2F;
-
-    private static final Instant DEFAULT_TIME_START = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_TIME_START = Instant.now().truncatedTo(ChronoUnit.MILLIS);
-
-    private static final Instant DEFAULT_TIME_STOP = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_TIME_STOP = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     private static final String ENTITY_API_URL = "/api/maps";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -56,9 +37,6 @@ class MapResourceIT {
 
     @Autowired
     private MapRepository mapRepository;
-
-    @Mock
-    private MapRepository mapRepositoryMock;
 
     @Autowired
     private EntityManager em;
@@ -75,7 +53,7 @@ class MapResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Map createEntity(EntityManager em) {
-        Map map = new Map().distance(DEFAULT_DISTANCE).timeStart(DEFAULT_TIME_START).timeStop(DEFAULT_TIME_STOP);
+        Map map = new Map();
         return map;
     }
 
@@ -86,7 +64,7 @@ class MapResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Map createUpdatedEntity(EntityManager em) {
-        Map map = new Map().distance(UPDATED_DISTANCE).timeStart(UPDATED_TIME_START).timeStop(UPDATED_TIME_STOP);
+        Map map = new Map();
         return map;
     }
 
@@ -108,9 +86,6 @@ class MapResourceIT {
         List<Map> mapList = mapRepository.findAll();
         assertThat(mapList).hasSize(databaseSizeBeforeCreate + 1);
         Map testMap = mapList.get(mapList.size() - 1);
-        assertThat(testMap.getDistance()).isEqualTo(DEFAULT_DISTANCE);
-        assertThat(testMap.getTimeStart()).isEqualTo(DEFAULT_TIME_START);
-        assertThat(testMap.getTimeStop()).isEqualTo(DEFAULT_TIME_STOP);
     }
 
     @Test
@@ -142,28 +117,7 @@ class MapResourceIT {
             .perform(get(ENTITY_API_URL + "?sort=id,desc"))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.[*].id").value(hasItem(map.getId().intValue())))
-            .andExpect(jsonPath("$.[*].distance").value(hasItem(DEFAULT_DISTANCE.doubleValue())))
-            .andExpect(jsonPath("$.[*].timeStart").value(hasItem(DEFAULT_TIME_START.toString())))
-            .andExpect(jsonPath("$.[*].timeStop").value(hasItem(DEFAULT_TIME_STOP.toString())));
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    void getAllMapsWithEagerRelationshipsIsEnabled() throws Exception {
-        when(mapRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-
-        restMapMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
-
-        verify(mapRepositoryMock, times(1)).findAllWithEagerRelationships(any());
-    }
-
-    @SuppressWarnings({ "unchecked" })
-    void getAllMapsWithEagerRelationshipsIsNotEnabled() throws Exception {
-        when(mapRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
-
-        restMapMockMvc.perform(get(ENTITY_API_URL + "?eagerload=true")).andExpect(status().isOk());
-
-        verify(mapRepositoryMock, times(1)).findAllWithEagerRelationships(any());
+            .andExpect(jsonPath("$.[*].id").value(hasItem(map.getId().intValue())));
     }
 
     @Test
@@ -177,10 +131,7 @@ class MapResourceIT {
             .perform(get(ENTITY_API_URL_ID, map.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
-            .andExpect(jsonPath("$.id").value(map.getId().intValue()))
-            .andExpect(jsonPath("$.distance").value(DEFAULT_DISTANCE.doubleValue()))
-            .andExpect(jsonPath("$.timeStart").value(DEFAULT_TIME_START.toString()))
-            .andExpect(jsonPath("$.timeStop").value(DEFAULT_TIME_STOP.toString()));
+            .andExpect(jsonPath("$.id").value(map.getId().intValue()));
     }
 
     @Test
@@ -202,7 +153,6 @@ class MapResourceIT {
         Map updatedMap = mapRepository.findById(map.getId()).get();
         // Disconnect from session so that the updates on updatedMap are not directly saved in db
         em.detach(updatedMap);
-        updatedMap.distance(UPDATED_DISTANCE).timeStart(UPDATED_TIME_START).timeStop(UPDATED_TIME_STOP);
 
         restMapMockMvc
             .perform(
@@ -216,9 +166,6 @@ class MapResourceIT {
         List<Map> mapList = mapRepository.findAll();
         assertThat(mapList).hasSize(databaseSizeBeforeUpdate);
         Map testMap = mapList.get(mapList.size() - 1);
-        assertThat(testMap.getDistance()).isEqualTo(UPDATED_DISTANCE);
-        assertThat(testMap.getTimeStart()).isEqualTo(UPDATED_TIME_START);
-        assertThat(testMap.getTimeStop()).isEqualTo(UPDATED_TIME_STOP);
     }
 
     @Test
@@ -287,8 +234,6 @@ class MapResourceIT {
         Map partialUpdatedMap = new Map();
         partialUpdatedMap.setId(map.getId());
 
-        partialUpdatedMap.distance(UPDATED_DISTANCE);
-
         restMapMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedMap.getId())
@@ -301,9 +246,6 @@ class MapResourceIT {
         List<Map> mapList = mapRepository.findAll();
         assertThat(mapList).hasSize(databaseSizeBeforeUpdate);
         Map testMap = mapList.get(mapList.size() - 1);
-        assertThat(testMap.getDistance()).isEqualTo(UPDATED_DISTANCE);
-        assertThat(testMap.getTimeStart()).isEqualTo(DEFAULT_TIME_START);
-        assertThat(testMap.getTimeStop()).isEqualTo(DEFAULT_TIME_STOP);
     }
 
     @Test
@@ -318,8 +260,6 @@ class MapResourceIT {
         Map partialUpdatedMap = new Map();
         partialUpdatedMap.setId(map.getId());
 
-        partialUpdatedMap.distance(UPDATED_DISTANCE).timeStart(UPDATED_TIME_START).timeStop(UPDATED_TIME_STOP);
-
         restMapMockMvc
             .perform(
                 patch(ENTITY_API_URL_ID, partialUpdatedMap.getId())
@@ -332,9 +272,6 @@ class MapResourceIT {
         List<Map> mapList = mapRepository.findAll();
         assertThat(mapList).hasSize(databaseSizeBeforeUpdate);
         Map testMap = mapList.get(mapList.size() - 1);
-        assertThat(testMap.getDistance()).isEqualTo(UPDATED_DISTANCE);
-        assertThat(testMap.getTimeStart()).isEqualTo(UPDATED_TIME_START);
-        assertThat(testMap.getTimeStop()).isEqualTo(UPDATED_TIME_STOP);
     }
 
     @Test

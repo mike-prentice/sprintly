@@ -47,7 +47,7 @@ export const Trends = (props: RouteComponentProps<{ url: string }>) => {
               <tr>
                 <th>ID</th>
                 <th>Avg Pace</th>
-                <th>Distance Per Run</th>
+                <th>Avgdistance</th>
                 <th>User</th>
                 <th />
               </tr>
@@ -61,7 +61,7 @@ export const Trends = (props: RouteComponentProps<{ url: string }>) => {
                     </Button>
                   </td>
                   <td>{trends.avgPace}</td>
-                  <td>{trends.distancePerRun}</td>
+                  <td>{trends.avgdistance}</td>
                   <td>{trends.user ? trends.user.login : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">

@@ -27,10 +27,6 @@ export const RankingDetail = (props: RouteComponentProps<{ id: string }>) => {
           </dt>
           <dd>{rankingEntity.id}</dd>
           <dt>
-            <span id="name">Name</span>
-          </dt>
-          <dd>{rankingEntity.name}</dd>
-          <dt>
             <span id="avgpace">Avgpace</span>
           </dt>
           <dd>{rankingEntity.avgpace}</dd>

@@ -82,13 +82,7 @@ export const TrendsUpdate = (props: RouteComponentProps<{ id: string }>) => {
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
               {!isNew ? <ValidatedField name="id" required readOnly id="trends-id" label="ID" validate={{ required: true }} /> : null}
               <ValidatedField label="Avg Pace" id="trends-avgPace" name="avgPace" data-cy="avgPace" type="text" />
-              <ValidatedField
-                label="Distance Per Run"
-                id="trends-distancePerRun"
-                name="distancePerRun"
-                data-cy="distancePerRun"
-                type="text"
-              />
+              <ValidatedField label="Avgdistance" id="trends-avgdistance" name="avgdistance" data-cy="avgdistance" type="text" />
               <ValidatedField id="trends-user" name="user" data-cy="user" label="User" type="select">
                 <option value="" key="0" />
                 {users

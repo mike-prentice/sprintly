@@ -4,7 +4,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
 import java.time.Duration;
 import javax.persistence.*;
-import javax.validation.constraints.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -23,18 +22,14 @@ public class Stats implements Serializable {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "distance_ran")
-    private Float distanceRan;
+    @Column(name = "distance")
+    private Float distance;
 
     @Column(name = "time")
     private Duration time;
 
-    @Max(value = 200)
-    @Column(name = "cadence")
-    private Integer cadence;
-
     @Column(name = "avgpace")
-    private Float avgpace;
+    private Duration avgpace;
 
     @OneToOne
     @JoinColumn(unique = true)
@@ -59,17 +54,17 @@ public class Stats implements Serializable {
         this.id = id;
     }
 
-    public Float getDistanceRan() {
-        return this.distanceRan;
+    public Float getDistance() {
+        return this.distance;
     }
 
-    public Stats distanceRan(Float distanceRan) {
-        this.setDistanceRan(distanceRan);
+    public Stats distance(Float distance) {
+        this.setDistance(distance);
         return this;
     }
 
-    public void setDistanceRan(Float distanceRan) {
-        this.distanceRan = distanceRan;
+    public void setDistance(Float distance) {
+        this.distance = distance;
     }
 
     public Duration getTime() {
@@ -85,29 +80,16 @@ public class Stats implements Serializable {
         this.time = time;
     }
 
-    public Integer getCadence() {
-        return this.cadence;
-    }
-
-    public Stats cadence(Integer cadence) {
-        this.setCadence(cadence);
-        return this;
-    }
-
-    public void setCadence(Integer cadence) {
-        this.cadence = cadence;
-    }
-
-    public Float getAvgpace() {
+    public Duration getAvgpace() {
         return this.avgpace;
     }
 
-    public Stats avgpace(Float avgpace) {
+    public Stats avgpace(Duration avgpace) {
         this.setAvgpace(avgpace);
         return this;
     }
 
-    public void setAvgpace(Float avgpace) {
+    public void setAvgpace(Duration avgpace) {
         this.avgpace = avgpace;
     }
 
@@ -161,10 +143,9 @@ public class Stats implements Serializable {
     public String toString() {
         return "Stats{" +
             "id=" + getId() +
-            ", distanceRan=" + getDistanceRan() +
+            ", distance=" + getDistance() +
             ", time='" + getTime() + "'" +
-            ", cadence=" + getCadence() +
-            ", avgpace=" + getAvgpace() +
+            ", avgpace='" + getAvgpace() + "'" +
             "}";
     }
 }

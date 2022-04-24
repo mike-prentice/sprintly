@@ -14,16 +14,13 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="distance_ran" type="${floatType}">
+            <column name="distance" type="${floatType}">
                 <constraints nullable="true" />
             </column>
             <column name="time" type="bigint">
                 <constraints nullable="true" />
             </column>
-            <column name="cadence" type="integer">
-                <constraints nullable="true" />
-            </column>
-            <column name="avgpace" type="${floatType}">
+            <column name="avgpace" type="bigint">
                 <constraints nullable="true" />
             </column>
             <column name="user_id" type="bigint">
@@ -53,9 +50,8 @@
                   tableName="stats"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
-            <column name="distance_ran" type="numeric"/>
+            <column name="distance" type="numeric"/>
             <column name="time" type="numeric"/>
-            <column name="cadence" type="numeric"/>
             <column name="avgpace" type="numeric"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>

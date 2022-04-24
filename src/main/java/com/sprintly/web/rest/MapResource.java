@@ -83,7 +83,8 @@ public class MapResource {
             throw new BadRequestAlertException("Entity not found", ENTITY_NAME, "idnotfound");
         }
 
-        Map result = mapRepository.save(map);
+        // no save call needed as we have no fields that can be updated
+        Map result = map;
         return ResponseEntity
             .ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, false, ENTITY_NAME, map.getId().toString()))
@@ -119,19 +120,9 @@ public class MapResource {
         Optional<Map> result = mapRepository
             .findById(map.getId())
             .map(existingMap -> {
-                if (map.getDistance() != null) {
-                    existingMap.setDistance(map.getDistance());
-                }
-                if (map.getTimeStart() != null) {
-                    existingMap.setTimeStart(map.getTimeStart());
-                }
-                if (map.getTimeStop() != null) {
-                    existingMap.setTimeStop(map.getTimeStop());
-                }
-
                 return existingMap;
-            })
-            .map(mapRepository::save);
+            })// .map(mapRepository::save)
+        ;
 
         return ResponseUtil.wrapOrNotFound(
             result,
@@ -142,13 +133,12 @@ public class MapResource {
     /**
      * {@code GET  /maps} : get all the maps.
      *
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of maps in body.
      */
     @GetMapping("/maps")
-    public List<Map> getAllMaps(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
+    public List<Map> getAllMaps() {
         log.debug("REST request to get all Maps");
-        return mapRepository.findAllWithEagerRelationships();
+        return mapRepository.findAll();
     }
 
     /**
@@ -160,7 +150,7 @@ public class MapResource {
     @GetMapping("/maps/{id}")
     public ResponseEntity<Map> getMap(@PathVariable Long id) {
         log.debug("REST request to get Map : {}", id);
-        Optional<Map> map = mapRepository.findOneWithEagerRelationships(id);
+        Optional<Map> map = mapRepository.findById(id);
         return ResponseUtil.wrapOrNotFound(map);
     }
 

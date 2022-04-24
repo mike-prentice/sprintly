@@ -23,8 +23,8 @@ public class Trends implements Serializable {
     @Column(name = "avg_pace")
     private Float avgPace;
 
-    @Column(name = "distance_per_run")
-    private Float distancePerRun;
+    @Column(name = "avgdistance")
+    private Float avgdistance;
 
     @OneToOne
     @JoinColumn(unique = true)
@@ -58,17 +58,17 @@ public class Trends implements Serializable {
         this.avgPace = avgPace;
     }
 
-    public Float getDistancePerRun() {
-        return this.distancePerRun;
+    public Float getAvgdistance() {
+        return this.avgdistance;
     }
 
-    public Trends distancePerRun(Float distancePerRun) {
-        this.setDistancePerRun(distancePerRun);
+    public Trends avgdistance(Float avgdistance) {
+        this.setAvgdistance(avgdistance);
         return this;
     }
 
-    public void setDistancePerRun(Float distancePerRun) {
-        this.distancePerRun = distancePerRun;
+    public void setAvgdistance(Float avgdistance) {
+        this.avgdistance = avgdistance;
     }
 
     public User getUser() {
@@ -109,7 +109,7 @@ public class Trends implements Serializable {
         return "Trends{" +
             "id=" + getId() +
             ", avgPace=" + getAvgPace() +
-            ", distancePerRun=" + getDistancePerRun() +
+            ", avgdistance=" + getAvgdistance() +
             "}";
     }
 }

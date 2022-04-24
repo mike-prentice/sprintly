@@ -3,7 +3,7 @@ import { IUser } from 'app/shared/model/user.model';
 export interface ITrends {
   id?: number;
   avgPace?: number | null;
-  distancePerRun?: number | null;
+  avgdistance?: number | null;
   user?: IUser | null;
 }
 

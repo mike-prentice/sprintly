@@ -10,7 +10,7 @@
       "fieldType": "Float"
     },
     {
-      "fieldName": "distancePerRun",
+      "fieldName": "avgdistance",
       "fieldType": "Float"
     }
   ],

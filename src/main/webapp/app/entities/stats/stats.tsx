@@ -47,9 +47,8 @@ export const Stats = (props: RouteComponentProps<{ url: string }>) => {
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Distance Ran</th>
+                <th>Distance</th>
                 <th>Time</th>
-                <th>Cadence</th>
                 <th>Avgpace</th>
                 <th>User</th>
                 <th>Ranking</th>
@@ -64,10 +63,9 @@ export const Stats = (props: RouteComponentProps<{ url: string }>) => {
                       {stats.id}
                     </Button>
                   </td>
-                  <td>{stats.distanceRan}</td>
+                  <td>{stats.distance}</td>
                   <td>{stats.time ? <DurationFormat value={stats.time} /> : null}</td>
-                  <td>{stats.cadence}</td>
-                  <td>{stats.avgpace}</td>
+                  <td>{stats.avgpace ? <DurationFormat value={stats.avgpace} /> : null}</td>
                   <td>{stats.user ? stats.user.login : ''}</td>
                   <td>{stats.ranking ? <Link to={`/ranking/${stats.ranking.id}`}>{stats.ranking.id}</Link> : ''}</td>
                   <td className="text-end">

@@ -8,8 +8,6 @@ import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import javax.validation.Valid;
-import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
@@ -48,7 +46,7 @@ public class StatsResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PostMapping("/stats")
-    public ResponseEntity<Stats> createStats(@Valid @RequestBody Stats stats) throws URISyntaxException {
+    public ResponseEntity<Stats> createStats(@RequestBody Stats stats) throws URISyntaxException {
         log.debug("REST request to save Stats : {}", stats);
         if (stats.getId() != null) {
             throw new BadRequestAlertException("A new stats cannot already have an ID", ENTITY_NAME, "idexists");
@@ -71,7 +69,7 @@ public class StatsResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PutMapping("/stats/{id}")
-    public ResponseEntity<Stats> updateStats(@PathVariable(value = "id", required = false) final Long id, @Valid @RequestBody Stats stats)
+    public ResponseEntity<Stats> updateStats(@PathVariable(value = "id", required = false) final Long id, @RequestBody Stats stats)
         throws URISyntaxException {
         log.debug("REST request to update Stats : {}, {}", id, stats);
         if (stats.getId() == null) {
@@ -104,10 +102,8 @@ public class StatsResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect.
      */
     @PatchMapping(value = "/stats/{id}", consumes = { "application/json", "application/merge-patch+json" })
-    public ResponseEntity<Stats> partialUpdateStats(
-        @PathVariable(value = "id", required = false) final Long id,
-        @NotNull @RequestBody Stats stats
-    ) throws URISyntaxException {
+    public ResponseEntity<Stats> partialUpdateStats(@PathVariable(value = "id", required = false) final Long id, @RequestBody Stats stats)
+        throws URISyntaxException {
         log.debug("REST request to partial update Stats partially : {}, {}", id, stats);
         if (stats.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
@@ -123,14 +119,11 @@ public class StatsResource {
         Optional<Stats> result = statsRepository
             .findById(stats.getId())
             .map(existingStats -> {
-                if (stats.getDistanceRan() != null) {
-                    existingStats.setDistanceRan(stats.getDistanceRan());
+                if (stats.getDistance() != null) {
+                    existingStats.setDistance(stats.getDistance());
                 }
                 if (stats.getTime() != null) {
                     existingStats.setTime(stats.getTime());
-                }
-                if (stats.getCadence() != null) {
-                    existingStats.setCadence(stats.getCadence());
                 }
                 if (stats.getAvgpace() != null) {
                     existingStats.setAvgpace(stats.getAvgpace());

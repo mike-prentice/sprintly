@@ -81,7 +81,6 @@ export const RankingUpdate = (props: RouteComponentProps<{ id: string }>) => {
           ) : (
             <ValidatedForm defaultValues={defaultValues()} onSubmit={saveEntity}>
               {!isNew ? <ValidatedField name="id" required readOnly id="ranking-id" label="ID" validate={{ required: true }} /> : null}
-              <ValidatedField label="Name" id="ranking-name" name="name" data-cy="name" type="text" />
               <ValidatedField label="Avgpace" id="ranking-avgpace" name="avgpace" data-cy="avgpace" type="text" />
               <ValidatedField label="Rank" id="ranking-rank" name="rank" data-cy="rank" type="text" />
               <ValidatedField id="ranking-user" name="user" data-cy="user" label="User" type="select">

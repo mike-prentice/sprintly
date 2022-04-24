@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
-import { TextFormat } from 'react-jhipster';
+import {} from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
@@ -26,20 +26,6 @@ export const MapDetail = (props: RouteComponentProps<{ id: string }>) => {
             <span id="id">ID</span>
           </dt>
           <dd>{mapEntity.id}</dd>
-          <dt>
-            <span id="distance">Distance</span>
-          </dt>
-          <dd>{mapEntity.distance}</dd>
-          <dt>
-            <span id="timeStart">Time Start</span>
-          </dt>
-          <dd>{mapEntity.timeStart ? <TextFormat value={mapEntity.timeStart} type="date" format={APP_DATE_FORMAT} /> : null}</dd>
-          <dt>
-            <span id="timeStop">Time Stop</span>
-          </dt>
-          <dd>{mapEntity.timeStop ? <TextFormat value={mapEntity.timeStop} type="date" format={APP_DATE_FORMAT} /> : null}</dd>
-          <dt>Stats</dt>
-          <dd>{mapEntity.stats ? mapEntity.stats.distance : ''}</dd>
         </dl>
         <Button tag={Link} to="/map" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" /> <span className="d-none d-md-inline">Back</span>

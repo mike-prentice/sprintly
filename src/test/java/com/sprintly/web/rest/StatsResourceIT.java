@@ -38,17 +38,14 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class StatsResourceIT {
 
-    private static final Float DEFAULT_DISTANCE_RAN = 1F;
-    private static final Float UPDATED_DISTANCE_RAN = 2F;
+    private static final Float DEFAULT_DISTANCE = 1F;
+    private static final Float UPDATED_DISTANCE = 2F;
 
     private static final Duration DEFAULT_TIME = Duration.ofHours(6);
     private static final Duration UPDATED_TIME = Duration.ofHours(12);
 
-    private static final Integer DEFAULT_CADENCE = 200;
-    private static final Integer UPDATED_CADENCE = 199;
-
-    private static final Float DEFAULT_AVGPACE = 1F;
-    private static final Float UPDATED_AVGPACE = 2F;
+    private static final Duration DEFAULT_AVGPACE = Duration.ofHours(6);
+    private static final Duration UPDATED_AVGPACE = Duration.ofHours(12);
 
     private static final String ENTITY_API_URL = "/api/stats";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -77,7 +74,7 @@ class StatsResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Stats createEntity(EntityManager em) {
-        Stats stats = new Stats().distanceRan(DEFAULT_DISTANCE_RAN).time(DEFAULT_TIME).cadence(DEFAULT_CADENCE).avgpace(DEFAULT_AVGPACE);
+        Stats stats = new Stats().distance(DEFAULT_DISTANCE).time(DEFAULT_TIME).avgpace(DEFAULT_AVGPACE);
         return stats;
     }
 
@@ -88,7 +85,7 @@ class StatsResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static Stats createUpdatedEntity(EntityManager em) {
-        Stats stats = new Stats().distanceRan(UPDATED_DISTANCE_RAN).time(UPDATED_TIME).cadence(UPDATED_CADENCE).avgpace(UPDATED_AVGPACE);
+        Stats stats = new Stats().distance(UPDATED_DISTANCE).time(UPDATED_TIME).avgpace(UPDATED_AVGPACE);
         return stats;
     }
 
@@ -110,9 +107,8 @@ class StatsResourceIT {
         List<Stats> statsList = statsRepository.findAll();
         assertThat(statsList).hasSize(databaseSizeBeforeCreate + 1);
         Stats testStats = statsList.get(statsList.size() - 1);
-        assertThat(testStats.getDistanceRan()).isEqualTo(DEFAULT_DISTANCE_RAN);
+        assertThat(testStats.getDistance()).isEqualTo(DEFAULT_DISTANCE);
         assertThat(testStats.getTime()).isEqualTo(DEFAULT_TIME);
-        assertThat(testStats.getCadence()).isEqualTo(DEFAULT_CADENCE);
         assertThat(testStats.getAvgpace()).isEqualTo(DEFAULT_AVGPACE);
     }
 
@@ -146,10 +142,9 @@ class StatsResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(stats.getId().intValue())))
-            .andExpect(jsonPath("$.[*].distanceRan").value(hasItem(DEFAULT_DISTANCE_RAN.doubleValue())))
+            .andExpect(jsonPath("$.[*].distance").value(hasItem(DEFAULT_DISTANCE.doubleValue())))
             .andExpect(jsonPath("$.[*].time").value(hasItem(DEFAULT_TIME.toString())))
-            .andExpect(jsonPath("$.[*].cadence").value(hasItem(DEFAULT_CADENCE)))
-            .andExpect(jsonPath("$.[*].avgpace").value(hasItem(DEFAULT_AVGPACE.doubleValue())));
+            .andExpect(jsonPath("$.[*].avgpace").value(hasItem(DEFAULT_AVGPACE.toString())));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -182,10 +177,9 @@ class StatsResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(stats.getId().intValue()))
-            .andExpect(jsonPath("$.distanceRan").value(DEFAULT_DISTANCE_RAN.doubleValue()))
+            .andExpect(jsonPath("$.distance").value(DEFAULT_DISTANCE.doubleValue()))
             .andExpect(jsonPath("$.time").value(DEFAULT_TIME.toString()))
-            .andExpect(jsonPath("$.cadence").value(DEFAULT_CADENCE))
-            .andExpect(jsonPath("$.avgpace").value(DEFAULT_AVGPACE.doubleValue()));
+            .andExpect(jsonPath("$.avgpace").value(DEFAULT_AVGPACE.toString()));
     }
 
     @Test
@@ -207,7 +201,7 @@ class StatsResourceIT {
         Stats updatedStats = statsRepository.findById(stats.getId()).get();
         // Disconnect from session so that the updates on updatedStats are not directly saved in db
         em.detach(updatedStats);
-        updatedStats.distanceRan(UPDATED_DISTANCE_RAN).time(UPDATED_TIME).cadence(UPDATED_CADENCE).avgpace(UPDATED_AVGPACE);
+        updatedStats.distance(UPDATED_DISTANCE).time(UPDATED_TIME).avgpace(UPDATED_AVGPACE);
 
         restStatsMockMvc
             .perform(
@@ -221,9 +215,8 @@ class StatsResourceIT {
         List<Stats> statsList = statsRepository.findAll();
         assertThat(statsList).hasSize(databaseSizeBeforeUpdate);
         Stats testStats = statsList.get(statsList.size() - 1);
-        assertThat(testStats.getDistanceRan()).isEqualTo(UPDATED_DISTANCE_RAN);
+        assertThat(testStats.getDistance()).isEqualTo(UPDATED_DISTANCE);
         assertThat(testStats.getTime()).isEqualTo(UPDATED_TIME);
-        assertThat(testStats.getCadence()).isEqualTo(UPDATED_CADENCE);
         assertThat(testStats.getAvgpace()).isEqualTo(UPDATED_AVGPACE);
     }
 
@@ -295,7 +288,7 @@ class StatsResourceIT {
         Stats partialUpdatedStats = new Stats();
         partialUpdatedStats.setId(stats.getId());
 
-        partialUpdatedStats.distanceRan(UPDATED_DISTANCE_RAN).avgpace(UPDATED_AVGPACE);
+        partialUpdatedStats.distance(UPDATED_DISTANCE);
 
         restStatsMockMvc
             .perform(
@@ -309,10 +302,9 @@ class StatsResourceIT {
         List<Stats> statsList = statsRepository.findAll();
         assertThat(statsList).hasSize(databaseSizeBeforeUpdate);
         Stats testStats = statsList.get(statsList.size() - 1);
-        assertThat(testStats.getDistanceRan()).isEqualTo(UPDATED_DISTANCE_RAN);
+        assertThat(testStats.getDistance()).isEqualTo(UPDATED_DISTANCE);
         assertThat(testStats.getTime()).isEqualTo(DEFAULT_TIME);
-        assertThat(testStats.getCadence()).isEqualTo(DEFAULT_CADENCE);
-        assertThat(testStats.getAvgpace()).isEqualTo(UPDATED_AVGPACE);
+        assertThat(testStats.getAvgpace()).isEqualTo(DEFAULT_AVGPACE);
     }
 
     @Test
@@ -327,7 +319,7 @@ class StatsResourceIT {
         Stats partialUpdatedStats = new Stats();
         partialUpdatedStats.setId(stats.getId());
 
-        partialUpdatedStats.distanceRan(UPDATED_DISTANCE_RAN).time(UPDATED_TIME).cadence(UPDATED_CADENCE).avgpace(UPDATED_AVGPACE);
+        partialUpdatedStats.distance(UPDATED_DISTANCE).time(UPDATED_TIME).avgpace(UPDATED_AVGPACE);
 
         restStatsMockMvc
             .perform(
@@ -341,9 +333,8 @@ class StatsResourceIT {
         List<Stats> statsList = statsRepository.findAll();
         assertThat(statsList).hasSize(databaseSizeBeforeUpdate);
         Stats testStats = statsList.get(statsList.size() - 1);
-        assertThat(testStats.getDistanceRan()).isEqualTo(UPDATED_DISTANCE_RAN);
+        assertThat(testStats.getDistance()).isEqualTo(UPDATED_DISTANCE);
         assertThat(testStats.getTime()).isEqualTo(UPDATED_TIME);
-        assertThat(testStats.getCadence()).isEqualTo(UPDATED_CADENCE);
         assertThat(testStats.getAvgpace()).isEqualTo(UPDATED_AVGPACE);
     }
 
