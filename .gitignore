@@ -137,6 +137,7 @@ Desktop.ini
 *~
 .merge_file*
 .env
+
 ######################
 # Gradle Wrapper
 ######################
@@ -157,3 +158,6 @@ Desktop.ini
 ######################
 /coverage/
 /.nyc_output/
+
+GoogleMapsUtils.ts
+src/main/webapp/app/modules/googleMapModule/GoogleMapsUtils.ts
