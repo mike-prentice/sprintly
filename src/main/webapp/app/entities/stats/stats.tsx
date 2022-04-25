@@ -38,12 +38,11 @@ export const Stats = (props: RouteComponentProps<{ url: string }>) => {
     
     <LineChart width={400} height={400} data={statsList}>
         <Line type="monotone" dataKey="distance" stroke="#8884d8" />
-        <YAxis />
+        <YAxis/>
       </LineChart>
       
       <LineChart width={400} height={400} data={statsList}>
         <Line type="monotone" dataKey="time" stroke="#8884d8" />
-        <YAxis />
           </LineChart>
        
  

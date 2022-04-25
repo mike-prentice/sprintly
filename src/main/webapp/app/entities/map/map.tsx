@@ -13,7 +13,7 @@ import Gmap from 'app/modules/googleMapModule/Gmap';
 import { loadMapApi } from 'app/modules/googleMapModule/GoogleMapsUtils';
 import 'app/modules/googleMapModule/Map.scss';
 import { getDistance } from 'app/modules/distanceAndTimeModule/distanceModule';
-import { convertTimestamp, getDuration } from 'app/modules/distanceAndTimeModule/timeModule';
+import { getDuration } from 'app/modules/distanceAndTimeModule/timeModule';
 
 export const Map = (props: RouteComponentProps<{ url: string }>) => {
   const dispatch = useAppDispatch();

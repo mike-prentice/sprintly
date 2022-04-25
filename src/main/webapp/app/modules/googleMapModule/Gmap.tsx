@@ -35,7 +35,7 @@ useEffect(startMap, [map]);
                     center: address,
                     mapTypeControl,
                     streetViewControl: false,
-                    zoomControl: true,
+                    zoomControl: false,
                     mapTypeId: mapType
                 })
             )
