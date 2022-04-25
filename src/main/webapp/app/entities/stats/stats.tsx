@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
-import { Button, Table } from 'reactstrap';
+import { Button, Card, Table } from 'reactstrap';
 import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { LineChart, Line, YAxis } from 'recharts';
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
@@ -10,12 +11,14 @@ import { DurationFormat } from 'app/shared/DurationFormat';
 
 import { IStats } from 'app/shared/model/stats.model';
 import { getEntities } from './stats.reducer';
+import { render } from '@testing-library/react';
 
 export const Stats = (props: RouteComponentProps<{ url: string }>) => {
   const dispatch = useAppDispatch();
 
   const statsList = useAppSelector(state => state.stats.entities);
   const loading = useAppSelector(state => state.stats.loading);
+  const distance = [];
 
   useEffect(() => {
     dispatch(getEntities({}));
@@ -25,11 +28,27 @@ export const Stats = (props: RouteComponentProps<{ url: string }>) => {
     dispatch(getEntities({}));
   };
 
+
+
   const { match } = props;
 
   return (
     <div>
-      <h2 id="stats-heading" data-cy="StatsHeading">
+    
+    
+    <LineChart width={400} height={400} data={statsList}>
+        <Line type="monotone" dataKey="distance" stroke="#8884d8" />
+        <YAxis />
+      </LineChart>
+      
+      <LineChart width={400} height={400} data={statsList}>
+        <Line type="monotone" dataKey="time" stroke="#8884d8" />
+        <YAxis />
+          </LineChart>
+       
+ 
+
+      {/* <h2 id="stats-heading" data-cy="StatsHeading">
         Stats
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
@@ -88,7 +107,7 @@ export const Stats = (props: RouteComponentProps<{ url: string }>) => {
         ) : (
           !loading && <div className="alert alert-warning">No Stats found</div>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };
