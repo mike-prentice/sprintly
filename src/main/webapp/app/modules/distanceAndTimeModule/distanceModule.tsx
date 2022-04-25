@@ -5,6 +5,7 @@ export function getDistance(lat, lng, endLat, endLng) {
     const R = 6371;
     const dLat = (endLat - lat) *(Math.PI/180);
     const dLong = (endLng - lng) *(Math.PI/180);
+    
     const a = Math.sin(dLat / 2)
             *
             Math.sin(dLat / 2) 

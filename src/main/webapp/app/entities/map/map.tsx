@@ -54,11 +54,15 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
           setStatus('Unable to retrieve final location');
         });
       }
+  
+  const getDistanceFunction = () => {
+    setDistance(getDistance(lat, lng, endLat, endLng));
+  }
 
       const stopWatching = () => {
         navigator.geolocation.clearWatch(watchID);
         endPosition();
-        setDistance(google.maps.DistanceMatrixService);
+        
       }
 
    useEffect(() => {
@@ -84,7 +88,8 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
           </div>
           <div className="d-flex justify-content-center">
             <button className="btn btn-primary justify-content-center" onClick={startWatching}>Start Run</button>
-            <button className="btn btn-primary justify-content-center" onClick={stopWatching}>Stop Run</button>
+        <button className="btn btn-primary justify-content-center" onClick={stopWatching}>Stop Run</button>
+        <button className="btn btn-primary justify-content-center" onClick={getDistanceFunction}>Get Distance</button>
             </div>
           <p>{status}</p>
           {lat && <p>Latitude: {lat}</p>}
