@@ -28,7 +28,8 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
     const [endLat, setEndLat] = useState(null);
     const [endLng, setEndLng] = useState(null);
     const [timeEnd, setTimeEnd] = useState(null);
-    const [distance, setDistance] = useState(null);
+  const [distance, setDistance] = useState(null);
+  const [duration, setDuration] = useState(null);
     let watchID;
 
     const startWatching = () => {
@@ -54,6 +55,10 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
           setStatus('Unable to retrieve final location');
         });
       }
+  
+  const getDurationFunction = () => {
+    setDuration(getDuration(timeStart, timeEnd));
+  }
   
   const getDistanceFunction = () => {
     setDistance(getDistance(lat, lng, endLat, endLng));
@@ -90,16 +95,18 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
             <button className="btn btn-primary justify-content-center" onClick={startWatching}>Start Run</button>
         <button className="btn btn-primary justify-content-center" onClick={stopWatching}>Stop Run</button>
         <button className="btn btn-primary justify-content-center" onClick={getDistanceFunction}>Get Distance</button>
+        <button className="btn btn-primary justify-content-center" onClick={getDurationFunction}>Get Duration</button>
             </div>
           <p>{status}</p>
           {lat && <p>Latitude: {lat}</p>}
           {lng && <p>Longitude: {lng}</p>}
           {timeStart && <p>Time Stamp {timeStart}</p>}
-          { <p>{distance}</p>}
-
+        
           {endLat && <p>End Latitude: {endLat}</p>}
           {endLng && <p>End Longitude: {endLng}</p>}
-          {timeEnd && <p> End Time Stamp {timeEnd}</p>}
+      {timeEnd && <p> End Time Stamp {timeEnd}</p>}
+      {<p>{distance}</p>}
+      { <p>{duration}</p>}
           </div>
 //      <h2 id="map-heading" data-cy="MapHeading">
 //         Maps
