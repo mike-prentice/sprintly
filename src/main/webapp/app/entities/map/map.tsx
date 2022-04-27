@@ -67,7 +67,10 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
   };
 
   const getDurationFunction = () => {
-    setDuration(getDuration(timeStart, timeEnd));
+     setDuration(getDuration(timeStart, timeEnd));
+    
+    // eslint-disable-next-line no-console
+    console.log(duration);
   };
 
   const getDistanceFunction = () => {
