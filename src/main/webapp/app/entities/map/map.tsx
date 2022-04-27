@@ -30,6 +30,7 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
   const [timeEnd, setTimeEnd] = useState(null);
   const [distance, setDistance] = useState(null);
   const [duration, setDuration] = useState(null);
+  let distances; 
   let watchID;
 
   const startWatching = () => {
@@ -70,7 +71,10 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
   };
 
   const getDistanceFunction = () => {
-    setDistance(getDistance(lat, lng, endLat, endLng));
+     distances = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(lat, lng), new google.maps.LatLng(endLat, endLng));
+    // setDistance(getDistance(lat, lng, endLat, endLng));
+     // eslint-disable-next-line no-console
+    console.log(distances);
   };
 
   const stopWatching = () => {
@@ -84,6 +88,7 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
       setScriptLoaded(true);
     });
     dispatch(getEntities({}));
+    
   }, []);
 
   const handleSyncList = () => {

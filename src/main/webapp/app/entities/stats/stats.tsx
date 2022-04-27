@@ -12,13 +12,14 @@ import { DurationFormat } from 'app/shared/DurationFormat';
 import { IStats } from 'app/shared/model/stats.model';
 import { getEntities } from './stats.reducer';
 import { render } from '@testing-library/react';
+// import { duration, distance } from 'app/entities/map/map.js';
 
 export const Stats = (props: RouteComponentProps<{ url: string }>) => {
   const dispatch = useAppDispatch();
 
   const statsList = useAppSelector(state => state.stats.entities);
   const loading = useAppSelector(state => state.stats.loading);
-  const distance = [];
+  
 
   useEffect(() => {
     dispatch(getEntities({}));
