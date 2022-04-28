@@ -17,36 +17,31 @@ export const Home = () => {
       </Col>
       <Col md="9">
         <h2>Welcome, Sprinter!</h2>
-        <p className="lead">Welcome to Sprintly!</p>
+        
         {account?.login ? (
           <div>
-            <Alert color="success">You are logged in as user {account.login}.</Alert>
+            <Alert color="primary">You are logged in as user {account.login}.</Alert>
+            <Link to="/map">
+          <button className="btn btn-primary justify-content-center">Start a Run</button>
+        </Link>
+        <Link to="/stats" className="alert-link">
+        <button className="btn btn-primary justify-content-center">View Stats</button>
+              </Link>
           </div>
         ) : (
-          <div>
-            <Alert color="warning">
-              If you want to
-              <span>&nbsp;</span>
-              <Link to="/login" className="alert-link">
-                {' '}
-                sign in
+            <div className="container-fluid">
+          <Link to="/login">
+          <button className="btn btn-primary justify-content-center">Sign In</button>
+        </Link>
+        <Link to="/account/register" className="alert-link">
+        <button className="btn btn-primary justify-content-center">Sign Up</button>
               </Link>
-              , you can try the default accounts:
-              <br />- Administrator (login=&quot;admin&quot; and password=&quot;admin&quot;)
-              <br />- User (login=&quot;user&quot; and password=&quot;user&quot;).
-            </Alert>
-
-            <Alert color="warning">
-              You do not have an account yet?&nbsp;
-              <Link to="/account/register" className="alert-link">
-                Register a new account
-              </Link>
-            </Alert>
-          </div>
+              </div>
         )}
-        
       </Col>
+  
     </Row>
+    
   );
 };
 

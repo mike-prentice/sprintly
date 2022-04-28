@@ -8,7 +8,7 @@ body {
 }
 
 a {
-  color: #533f03;
+  color: #d1e8f9;
   font-weight: bold;
 }
 
@@ -22,8 +22,12 @@ a {
   }
 }
 
+button {
+  padding-right: 5px;
+}
+
 .app-container {
-  background-color: #bfe1f9;
+  background-color: #e6eff5;
   box-sizing: border-box;
   .view-container {
     width: 100%;
