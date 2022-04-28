@@ -2,7 +2,6 @@ package com.sprintly.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.time.Duration;
 import javax.persistence.*;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
@@ -26,13 +25,12 @@ public class Stats implements Serializable {
     private Float distance;
 
     @Column(name = "time")
-    private Duration time;
+    private Float time;
 
     @Column(name = "avgpace")
-    private Duration avgpace;
+    private Float avgpace;
 
-    @OneToOne
-    @JoinColumn(unique = true)
+    @ManyToOne
     private User user;
 
     @ManyToOne
@@ -67,29 +65,29 @@ public class Stats implements Serializable {
         this.distance = distance;
     }
 
-    public Duration getTime() {
+    public Float getTime() {
         return this.time;
     }
 
-    public Stats time(Duration time) {
+    public Stats time(Float time) {
         this.setTime(time);
         return this;
     }
 
-    public void setTime(Duration time) {
+    public void setTime(Float time) {
         this.time = time;
     }
 
-    public Duration getAvgpace() {
+    public Float getAvgpace() {
         return this.avgpace;
     }
 
-    public Stats avgpace(Duration avgpace) {
+    public Stats avgpace(Float avgpace) {
         this.setAvgpace(avgpace);
         return this;
     }
 
-    public void setAvgpace(Duration avgpace) {
+    public void setAvgpace(Float avgpace) {
         this.avgpace = avgpace;
     }
 
@@ -144,8 +142,8 @@ public class Stats implements Serializable {
         return "Stats{" +
             "id=" + getId() +
             ", distance=" + getDistance() +
-            ", time='" + getTime() + "'" +
-            ", avgpace='" + getAvgpace() + "'" +
+            ", time=" + getTime() +
+            ", avgpace=" + getAvgpace() +
             "}";
     }
 }

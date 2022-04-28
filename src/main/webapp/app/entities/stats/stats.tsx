@@ -19,7 +19,6 @@ export const Stats = (props: RouteComponentProps<{ url: string }>) => {
 
   const statsList = useAppSelector(state => state.stats.entities);
   const loading = useAppSelector(state => state.stats.loading);
-  
 
   useEffect(() => {
     dispatch(getEntities({}));
@@ -29,16 +28,12 @@ export const Stats = (props: RouteComponentProps<{ url: string }>) => {
     dispatch(getEntities({}));
   };
 
-
-
   const { match } = props;
 
   return (
     <div>
-     
-    
-    
-    <Card className="jh-card">
+
+<Card className="jh-card">
     <LineChart width={600} height={400} data={statsList}>
         <Line type="monotone" dataKey="distance" stroke="#8884d8" strokeWidth={2}/>
         <YAxis dataKey = "distance"/>
@@ -46,17 +41,16 @@ export const Stats = (props: RouteComponentProps<{ url: string }>) => {
       </LineChart>
       </Card>
       
-      {/* <Card className="jh-card">
+       <Card className="jh-card">
       <LineChart width={400} height={400} data={statsList}>
         <Line type="monotone" dataKey="time" stroke="#8884d8" strokeWidth={2}/>
         <YAxis dataKey = "time"/>
         <XAxis/>
       </LineChart>
-      </Card> */}
-       
- 
+      </Card> 
 
-      <h2 id="stats-heading" data-cy="StatsHeading">
+
+      {/* <h2 id="stats-heading" data-cy="StatsHeading">
         Stats
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
@@ -91,8 +85,8 @@ export const Stats = (props: RouteComponentProps<{ url: string }>) => {
                     </Button>
                   </td>
                   <td>{stats.distance}</td>
-                  <td>{stats.time ? <DurationFormat value={stats.time} /> : null}</td>
-                  <td>{stats.avgpace ? <DurationFormat value={stats.avgpace} /> : null}</td>
+                  <td>{stats.time}</td>
+                  <td>{stats.avgpace}</td>
                   <td>{stats.user ? stats.user.login : ''}</td>
                   <td>{stats.ranking ? <Link to={`/ranking/${stats.ranking.id}`}>{stats.ranking.id}</Link> : ''}</td>
                   <td className="text-end">
@@ -115,7 +109,7 @@ export const Stats = (props: RouteComponentProps<{ url: string }>) => {
         ) : (
           !loading && <div className="alert alert-warning">No Stats found</div>
         )}
-      </div>
+      </div> */}
     </div>
   );
 };

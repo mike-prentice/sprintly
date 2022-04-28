@@ -14,6 +14,9 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface StatsRepository extends JpaRepository<Stats, Long> {
+    @Query("select stats from Stats stats where stats.user.login = ?#{principal.username}")
+    List<Stats> findByUserIsCurrentUser();
+
     default Optional<Stats> findOneWithEagerRelationships(Long id) {
         return this.findOneWithToOneRelationships(id);
     }
@@ -37,7 +40,4 @@ public interface StatsRepository extends JpaRepository<Stats, Long> {
 
     @Query("select stats from Stats stats left join fetch stats.user where stats.id =:id")
     Optional<Stats> findOneWithToOneRelationships(@Param("id") Long id);
-
-    @Query("select stats from Stats stats left join fetch stats.user where stats.user.login =:#{principal.username}")
-    List<Stats> findByUserIsCurrentUser();
 }

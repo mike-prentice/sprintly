@@ -1,12 +1,7 @@
 entity Stats {
 distance Float
-time Duration
-avgpace Duration
-}
-
-entity Trends{
-avgPace Float
-avgdistance Float
+time Float
+avgpace Float
 }
 
 entity Ranking {
@@ -17,18 +12,16 @@ rank Integer
 entity Map {
 }
 
-
+relationship ManyToOne {
+Stats{user(login)} to User
+}
 
 relationship OneToOne {
-Trends{user(login)} to User
-Stats{user(login)} to User
 Ranking{user(login)} to User
 }
 
 relationship OneToMany {
 Ranking{stats(avgpace)} to Stats
-
-
 }
 
 

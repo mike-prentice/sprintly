@@ -11,11 +11,11 @@
     },
     {
       "fieldName": "time",
-      "fieldType": "Duration"
+      "fieldType": "Float"
     },
     {
       "fieldName": "avgpace",
-      "fieldType": "Duration"
+      "fieldType": "Float"
     }
   ],
   "fluentMethods": true,
@@ -28,9 +28,8 @@
       "otherEntityField": "login",
       "otherEntityName": "user",
       "otherEntityRelationshipName": "stats",
-      "ownerSide": true,
       "relationshipName": "user",
-      "relationshipType": "one-to-one"
+      "relationshipType": "many-to-one"
     },
     {
       "otherEntityName": "ranking",

@@ -9,7 +9,6 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import com.sprintly.IntegrationTest;
 import com.sprintly.domain.Stats;
 import com.sprintly.repository.StatsRepository;
-import java.time.Duration;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -41,11 +40,11 @@ class StatsResourceIT {
     private static final Float DEFAULT_DISTANCE = 1F;
     private static final Float UPDATED_DISTANCE = 2F;
 
-    private static final Duration DEFAULT_TIME = Duration.ofHours(6);
-    private static final Duration UPDATED_TIME = Duration.ofHours(12);
+    private static final Float DEFAULT_TIME = 1F;
+    private static final Float UPDATED_TIME = 2F;
 
-    private static final Duration DEFAULT_AVGPACE = Duration.ofHours(6);
-    private static final Duration UPDATED_AVGPACE = Duration.ofHours(12);
+    private static final Float DEFAULT_AVGPACE = 1F;
+    private static final Float UPDATED_AVGPACE = 2F;
 
     private static final String ENTITY_API_URL = "/api/stats";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -143,8 +142,8 @@ class StatsResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(stats.getId().intValue())))
             .andExpect(jsonPath("$.[*].distance").value(hasItem(DEFAULT_DISTANCE.doubleValue())))
-            .andExpect(jsonPath("$.[*].time").value(hasItem(DEFAULT_TIME.toString())))
-            .andExpect(jsonPath("$.[*].avgpace").value(hasItem(DEFAULT_AVGPACE.toString())));
+            .andExpect(jsonPath("$.[*].time").value(hasItem(DEFAULT_TIME.doubleValue())))
+            .andExpect(jsonPath("$.[*].avgpace").value(hasItem(DEFAULT_AVGPACE.doubleValue())));
     }
 
     @SuppressWarnings({ "unchecked" })
@@ -178,8 +177,8 @@ class StatsResourceIT {
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(stats.getId().intValue()))
             .andExpect(jsonPath("$.distance").value(DEFAULT_DISTANCE.doubleValue()))
-            .andExpect(jsonPath("$.time").value(DEFAULT_TIME.toString()))
-            .andExpect(jsonPath("$.avgpace").value(DEFAULT_AVGPACE.toString()));
+            .andExpect(jsonPath("$.time").value(DEFAULT_TIME.doubleValue()))
+            .andExpect(jsonPath("$.avgpace").value(DEFAULT_AVGPACE.doubleValue()));
     }
 
     @Test

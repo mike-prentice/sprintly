@@ -4,8 +4,8 @@ import { IRanking } from 'app/shared/model/ranking.model';
 export interface IStats {
   id?: number;
   distance?: number | null;
-  time?: string | null;
-  avgpace?: string | null;
+  time?: number | null;
+  avgpace?: number | null;
   user?: IUser | null;
   ranking?: IRanking | null;
 }

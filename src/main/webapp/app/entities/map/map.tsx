@@ -30,7 +30,7 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
   const [timeEnd, setTimeEnd] = useState(null);
   const [distance, setDistance] = useState(null);
   const [duration, setDuration] = useState(null)
-  let distances; 
+  let distances;
   let watchID;
 
   const startWatching = () => {
@@ -68,7 +68,7 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
 
   const getDurationFunction = () => {
      setDuration(getDuration(timeStart, timeEnd));
-    
+
     // eslint-disable-next-line no-console
     console.log(duration);
   };
@@ -94,7 +94,7 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
       setScriptLoaded(true);
     });
     dispatch(getEntities({}));
-    
+
   }, []);
 
   const handleSyncList = () => {

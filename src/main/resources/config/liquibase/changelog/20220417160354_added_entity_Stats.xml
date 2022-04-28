@@ -17,14 +17,14 @@
             <column name="distance" type="${floatType}">
                 <constraints nullable="true" />
             </column>
-            <column name="time" type="bigint">
+            <column name="time" type="${floatType}">
                 <constraints nullable="true" />
             </column>
-            <column name="avgpace" type="bigint">
+            <column name="avgpace" type="${floatType}">
                 <constraints nullable="true" />
             </column>
             <column name="user_id" type="bigint">
-                <constraints nullable="true" unique="true" uniqueConstraintName="ux_stats__user_id" />
+                <constraints nullable="true" />
             </column>
             <column name="ranking_id" type="bigint">
                 <constraints nullable="true" />
