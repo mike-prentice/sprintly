@@ -6,7 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
-
+import {StatsUpdate} from 'app/entities/stats/stats-update.js'
 import { IMap } from 'app/shared/model/map.model';
 import { getEntities } from './map.reducer';
 import Gmap from 'app/modules/googleMapModule/Gmap';
@@ -29,7 +29,7 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
   const [endLng, setEndLng] = useState(null);
   const [timeEnd, setTimeEnd] = useState(null);
   const [distance, setDistance] = useState(null);
-  const [duration, setDuration] = useState(null);
+  const [duration, setDuration] = useState(null)
   let distances; 
   let watchID;
 
@@ -83,6 +83,9 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
   const stopWatching = () => {
     navigator.geolocation.clearWatch(watchID);
     endPosition();
+    getDistanceFunction();
+    getDurationFunction();
+    // StatsUpdate.saveEntity(distances, duration);
   };
 
   useEffect(() => {

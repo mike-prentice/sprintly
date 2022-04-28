@@ -46,13 +46,13 @@ export const Stats = (props: RouteComponentProps<{ url: string }>) => {
       </LineChart>
       </Card>
       
-      <Card className="jh-card">
+      {/* <Card className="jh-card">
       <LineChart width={400} height={400} data={statsList}>
         <Line type="monotone" dataKey="time" stroke="#8884d8" strokeWidth={2}/>
         <YAxis dataKey = "time"/>
         <XAxis/>
       </LineChart>
-      </Card>
+      </Card> */}
        
  
 
