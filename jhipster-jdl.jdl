@@ -17,6 +17,8 @@ rank Integer
 entity Map {
 }
 
+
+
 relationship OneToOne {
 Trends{user(login)} to User
 Stats{user(login)} to User

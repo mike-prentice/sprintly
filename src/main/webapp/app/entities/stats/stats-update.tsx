@@ -14,6 +14,7 @@ import { IRanking } from 'app/shared/model/ranking.model';
 import { getEntities as getRankings } from 'app/entities/ranking/ranking.reducer';
 import { IStats } from 'app/shared/model/stats.model';
 import { getEntity, updateEntity, createEntity, reset } from './stats.reducer';
+// import { duration, distances } from 'app/entities/map/map.js';
 
 export const StatsUpdate = (props: RouteComponentProps<{ id: string }>) => {
   const dispatch = useAppDispatch();

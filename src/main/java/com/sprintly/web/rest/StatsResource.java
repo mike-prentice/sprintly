@@ -148,7 +148,7 @@ public class StatsResource {
     @GetMapping("/stats")
     public List<Stats> getAllStats(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Stats");
-        return statsRepository.findAllWithEagerRelationships();
+      return statsRepository.findByUserIsCurrentUser();
     }
 
     /**
