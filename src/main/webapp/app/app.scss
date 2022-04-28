@@ -12,6 +12,11 @@ a {
   font-weight: bold;
 }
 
+img {
+  max-width: 100%;
+  max-height: 100%;
+}
+
 * {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -27,8 +32,9 @@ button {
 }
 
 .app-container {
-  background-color: #e6eff5;
+  background-color: #e0edf6;
   box-sizing: border-box;
+  height: 100%;
   .view-container {
     width: 100%;
     height: calc(100% - 40px);

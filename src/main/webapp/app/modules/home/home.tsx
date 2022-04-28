@@ -12,14 +12,15 @@ export const Home = () => {
 
   return (
     <Row>
-      <Col md="3" className="pad">
-        <span className="hipster rounded" />
-      </Col>
-      <Col md="9">
-        <h2>Welcome, Sprinter!</h2>
+      
+      <Col md="10">
+        <div className="container-fluid">
+          <img src='../../../content/images/sprintlylogo.png' className="justify-content-center"></img>
+          </div>
+        <h1>Welcome, Sprinter!</h1>
         
         {account?.login ? (
-          <div>
+          <div className="jumbotron">
             <Alert color="primary">You are logged in as user {account.login}.</Alert>
             <Link to="/map">
           <button className="btn btn-primary justify-content-center">Start a Run</button>

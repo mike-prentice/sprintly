@@ -42,7 +42,7 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
         setLng(position.coords.longitude);
         setTimeStart(position.timestamp);
         // eslint-disable-next-line no-console
-        console.log(position);
+        console.log("start pos" + position);
       },
       () => {
         setStatus('Unable to retrieve location');
@@ -58,7 +58,7 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
         setEndLng(position.coords.longitude);
         setTimeEnd(position.timestamp);
         // eslint-disable-next-line no-console
-        console.log(position);
+        console.log("end pos" + position);
       },
       () => {
         setStatus('Unable to retrieve final location');
@@ -70,14 +70,14 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
      setDuration(getDuration(timeStart, timeEnd));
 
     // eslint-disable-next-line no-console
-    console.log(duration);
+    console.log("duration" + duration);
   };
 
   const getDistanceFunction = () => {
      distances = google.maps.geometry.spherical.computeDistanceBetween(new google.maps.LatLng(lat, lng), new google.maps.LatLng(endLat, endLng));
     // setDistance(getDistance(lat, lng, endLat, endLng));
      // eslint-disable-next-line no-console
-    console.log(distances);
+    console.log("distances" + distances);
   };
 
   const stopWatching = () => {
