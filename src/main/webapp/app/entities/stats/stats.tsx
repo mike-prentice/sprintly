@@ -50,7 +50,7 @@ export const Stats = (props: RouteComponentProps<{ url: string }>) => {
       </Card> 
 
 
-      {/* <h2 id="stats-heading" data-cy="StatsHeading">
+      <h2 id="stats-heading" data-cy="StatsHeading">
         Stats
         <div className="d-flex justify-content-end">
           <Button className="me-2" color="info" onClick={handleSyncList} disabled={loading}>
@@ -109,7 +109,7 @@ export const Stats = (props: RouteComponentProps<{ url: string }>) => {
         ) : (
           !loading && <div className="alert alert-warning">No Stats found</div>
         )}
-      </div> */}
+      </div>
     </div>
   );
 };

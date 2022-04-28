@@ -3,7 +3,7 @@ import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
 import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-
+import axios from 'axios';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import {StatsUpdate} from 'app/entities/stats/stats-update.js'
@@ -87,6 +87,31 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
     getDurationFunction();
     // StatsUpdate.saveEntity(distances, duration);
   };
+
+  async function postData () {
+    const stats = {
+      id: "40",
+      distance: 10,
+      time: 2.5,
+      ranking: 8,
+    }
+  
+    try {
+      const response = await axios.post("http://localhost:8080/stats", stats)
+      // eslint-disable-next-line no-console
+      console.log("Request successful!")
+    } catch (error) {
+      if (error.response) {
+        // eslint-disable-next-line no-console
+        console.log(error.reponse.status)
+      } else {
+        // eslint-disable-next-line no-console
+        console.log(error.message)
+      }
+    }
+  }
+  
+  postData();
 
   useEffect(() => {
     const googleMapScript = loadMapApi();
