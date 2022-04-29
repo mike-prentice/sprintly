@@ -85,6 +85,7 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
     endPosition();
     getDistanceFunction();
     getDurationFunction();
+    
     // StatsUpdate.saveEntity(distances, duration);
   };
 
@@ -93,17 +94,18 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
       id: "40",
       distance: 10,
       time: 2.5,
+      avgpace: 5,
       ranking: 8,
     }
   
     try {
-      const response = await axios.post("http://localhost:8080/stats", stats)
+      const response = await axios.post("http://localhost:9000/api/stats", stats)
       // eslint-disable-next-line no-console
       console.log("Request successful!")
     } catch (error) {
       if (error.response) {
         // eslint-disable-next-line no-console
-        console.log(error.reponse.status)
+        console.log(error.reponse)
       } else {
         // eslint-disable-next-line no-console
         console.log(error.message)
