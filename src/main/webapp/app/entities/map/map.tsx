@@ -141,7 +141,7 @@ export const Map = (props: RouteComponentProps<{ url: string }>) => {
           Stop Run
         </button>
         <button className="btn btn-primary justify-content-center" onClick={getDistanceFunction}>
-          Get Distance
+          Distance
         </button>
         <button className="btn btn-primary justify-content-center" onClick={getDurationFunction}>
           Get Duration

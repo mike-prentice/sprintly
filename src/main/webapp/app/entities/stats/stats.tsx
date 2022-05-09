@@ -35,7 +35,8 @@ export const Stats = (props: RouteComponentProps<{ url: string }>) => {
 
 <Card className="jh-card">
     <LineChart width={600} height={400} data={statsList}>
-        <Line type="monotone" dataKey="distance" stroke="#8884d8" strokeWidth={2}/>
+          <Line type="monotone" dataKey="distance" stroke="#8884d8" strokeWidth={2} />
+          <Line type="monotone" dataKey="time" stroke="#8984d8" strokeWidth={2}/>
         <YAxis dataKey = "distance"/>
         <XAxis/>
       </LineChart>
@@ -43,7 +44,7 @@ export const Stats = (props: RouteComponentProps<{ url: string }>) => {
       
        <Card className="jh-card">
       <LineChart width={400} height={400} data={statsList}>
-        <Line type="monotone" dataKey="time" stroke="#8884d8" strokeWidth={2}/>
+        
         <YAxis dataKey = "time"/>
         <XAxis/>
       </LineChart>
